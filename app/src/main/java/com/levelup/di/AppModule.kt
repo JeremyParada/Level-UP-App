@@ -13,6 +13,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+import com.levelup.data.auth.AuthRepository
+import com.levelup.data.auth.AuthRepositoryImpl
+import com.levelup.data.session.SessionManager
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -38,5 +42,17 @@ object AppModule {
     @Singleton
     fun provideCartRepository(): CartRepository {
         return CartRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(): AuthRepository {
+        return AuthRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
+        return SessionManager(context)
     }
 }
