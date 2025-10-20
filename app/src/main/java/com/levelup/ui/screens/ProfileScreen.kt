@@ -18,18 +18,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.levelup.ui.navigation.Screen
 import com.levelup.ui.theme.LevelUpPrimary
 import com.levelup.ui.theme.LevelUpSecondary
+import com.levelup.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(navController: NavController) {
-    // Estado simulado del usuario
-    var isLoggedIn by remember { mutableStateOf(false) }
-    val userName = "Gamer Pro"
-    val userEmail = "gamer@levelup.com"
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
+    val currentUser by authViewModel.currentUser.collectAsState()
 
     Scaffold(
         topBar = {
@@ -53,19 +54,28 @@ fun ProfileScreen(navController: NavController) {
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
-            if (isLoggedIn) {
+            if (isLoggedIn && currentUser != null) {
                 // Perfil de usuario logueado
-                ProfileHeader(userName, userEmail)
-                
+                ProfileHeader(
+                    userName = "${currentUser!!.nombre} ${currentUser!!.apellido}",
+                    userEmail = currentUser!!.email
+                )
+
                 Spacer(modifier = Modifier.height(24.dp))
-                
+
                 ProfileMenuSection(navController)
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Botón de cerrar sesión
                 Button(
-                    onClick = { isLoggedIn = false },
+                    onClick = {
+                        authViewModel.logout()
+                        // Opcional: Navegar al home después de logout
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Profile.route) { inclusive = true }
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
@@ -80,7 +90,9 @@ fun ProfileScreen(navController: NavController) {
             } else {
                 // Vista de no logueado
                 GuestProfileContent(
-                    onLoginClick = { isLoggedIn = true },
+                    onLoginClick = {
+                        navController.navigate(Screen.Login.route)
+                    },
                     onRegisterClick = {
                         navController.navigate(Screen.Register.route)
                     }

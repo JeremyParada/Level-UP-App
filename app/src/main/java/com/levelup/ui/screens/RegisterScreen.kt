@@ -2,10 +2,10 @@ package com.levelup.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -13,8 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,11 +21,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.levelup.ui.theme.LevelUpPrimary
-import kotlinx.coroutines.launch // AGREGAR ESTE IMPORT
+import com.levelup.viewmodel.AuthViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun RegisterScreen(
+    navController: NavController,
+    authViewModel: AuthViewModel
+) {
     var nombre by remember { mutableStateOf("") }
     var apellido by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -39,31 +41,10 @@ fun RegisterScreen(navController: NavController) {
     var acceptTerms by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
 
-    val focusManager = LocalFocusManager.current
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope() // Ahora funcionará
+    val scope = rememberCoroutineScope()
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Crear Cuenta",
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = LevelUpPrimary,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
-            )
-        },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
         Column(
@@ -74,312 +55,115 @@ fun RegisterScreen(navController: NavController) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Icono de bienvenida
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = null,
-                modifier = Modifier.size(80.dp),
-                tint = LevelUpPrimary
-            )
-
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "¡Únete a Level-UP!",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Crea tu cuenta y comienza a disfrutar de la mejor experiencia gamer",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Campo Nombre
             OutlinedTextField(
                 value = nombre,
                 onValueChange = { nombre = it },
                 label = { Text("Nombre") },
-                leadingIcon = {
-                    Icon(Icons.Default.Person, contentDescription = null)
-                },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                ),
                 singleLine = true
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo Apellido
             OutlinedTextField(
                 value = apellido,
                 onValueChange = { apellido = it },
                 label = { Text("Apellido") },
-                leadingIcon = {
-                    Icon(Icons.Default.Person, contentDescription = null)
-                },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                ),
                 singleLine = true
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo Email
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Correo Electrónico") },
-                leadingIcon = {
-                    Icon(Icons.Default.Email, contentDescription = null)
-                },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                ),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(onNext = { /* no-op */ }),
                 singleLine = true
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo Teléfono
             OutlinedTextField(
                 value = telefono,
                 onValueChange = { telefono = it },
                 label = { Text("Teléfono") },
-                leadingIcon = {
-                    Icon(Icons.Default.Phone, contentDescription = null)
-                },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Phone,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                ),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
                 singleLine = true
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo Contraseña
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Contraseña") },
-                leadingIcon = {
-                    Icon(Icons.Default.Lock, contentDescription = null)
-                },
-                trailingIcon = {
-                    IconButton(onClick = { showPassword = !showPassword }) {
-                        Icon(
-                            if (showPassword) Icons.Default.Lock else Icons.Default.Lock,
-                            contentDescription = if (showPassword) "Ocultar" else "Mostrar"
-                        )
-                    }
-                },
-                visualTransformation = if (showPassword) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                ),
+                visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 singleLine = true
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo Confirmar Contraseña
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
                 label = { Text("Confirmar Contraseña") },
-                leadingIcon = {
-                    Icon(Icons.Default.Lock, contentDescription = null)
-                },
-                trailingIcon = {
-                    IconButton(onClick = { showConfirmPassword = !showConfirmPassword }) {
-                        Icon(
-                            if (showConfirmPassword) Icons.Default.Lock else Icons.Default.Lock,
-                            contentDescription = if (showConfirmPassword) "Ocultar" else "Mostrar"
-                        )
-                    }
-                },
-                visualTransformation = if (showConfirmPassword) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { focusManager.clearFocus() }
-                ),
+                visualTransformation = if (showConfirmPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 singleLine = true,
-                isError = confirmPassword.isNotEmpty() && password != confirmPassword,
-                supportingText = {
-                    if (confirmPassword.isNotEmpty() && password != confirmPassword) {
-                        Text(
-                            text = "Las contraseñas no coinciden",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Checkbox de términos y condiciones
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = acceptTerms,
                     onCheckedChange = { acceptTerms = it },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = LevelUpPrimary
-                    )
+                    colors = CheckboxDefaults.colors(checkedColor = LevelUpPrimary)
                 )
-                Text(
-                    text = "Acepto los términos y condiciones",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Acepto los términos y condiciones")
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Botón de registro
             Button(
                 onClick = {
-                    if (validateForm(
-                            nombre, apellido, email, telefono,
-                            password, confirmPassword, acceptTerms
-                        )
+                    if (nombre.isNotBlank() && apellido.isNotBlank() && email.isNotBlank() &&
+                        password == confirmPassword && acceptTerms
                     ) {
                         isLoading = true
-                        // TODO: Implementar lógica de registro
-                        // Por ahora solo simulamos el registro exitoso
-                        kotlinx.coroutines.GlobalScope.launch {
-                            kotlinx.coroutines.delay(2000)
+                        scope.launch {
+                            val success = authViewModel.registerUser(nombre, apellido, email, telefono, password)
                             isLoading = false
-                            snackbarHostState.showSnackbar(
-                                "¡Cuenta creada exitosamente!",
-                                duration = SnackbarDuration.Short
-                            )
-                            navController.navigateUp()
-                        }
-                    } else {
-                        kotlinx.coroutines.GlobalScope.launch {
-                            snackbarHostState.showSnackbar(
-                                "Por favor, completa todos los campos correctamente",
-                                duration = SnackbarDuration.Short
-                            )
+                            if (success) {
+                                navController.navigate("profile") {
+                                    popUpTo("register") { inclusive = true }
+                                }
+                            }
                         }
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                enabled = !isLoading,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = LevelUpPrimary
-                ),
+                modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 if (isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = Color.White
-                    )
+                    CircularProgressIndicator(modifier = Modifier.size(24.dp), color = MaterialTheme.colorScheme.onPrimary)
                 } else {
-                    Text(
-                        text = "Crear Cuenta",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text("Crear Cuenta", fontWeight = FontWeight.Bold)
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Link para iniciar sesión
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "¿Ya tienes cuenta?",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                TextButton(onClick = { navController.navigateUp() }) {
-                    Text(
-                        text = "Iniciar Sesión",
-                        color = LevelUpPrimary,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+            TextButton(onClick = { navController.navigate("login") }) {
+                Text("¿Ya tienes cuenta? Iniciar Sesión", color = LevelUpPrimary)
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
         }
     }
-}
-
-private fun validateForm(
-    nombre: String,
-    apellido: String,
-    email: String,
-    telefono: String,
-    password: String,
-    confirmPassword: String,
-    acceptTerms: Boolean
-): Boolean {
-    return nombre.isNotBlank() &&
-            apellido.isNotBlank() &&
-            email.isNotBlank() &&
-            android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
-            telefono.isNotBlank() &&
-            password.length >= 6 &&
-            password == confirmPassword &&
-            acceptTerms
 }

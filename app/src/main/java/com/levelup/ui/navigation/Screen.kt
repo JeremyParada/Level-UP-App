@@ -1,6 +1,7 @@
 package com.levelup.ui.navigation
 
 sealed class Screen(val route: String) {
+    object Login : Screen("login")
     object Home : Screen("home")
     object Products : Screen("products")
     object ProductDetail : Screen("product/{productId}") {

@@ -6,9 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.levelup.ui.navigation.LevelUpNavigation
+import com.levelup.ui.screens.LoginScreen
 import com.levelup.ui.theme.LevelUpTheme
+import com.levelup.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +26,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LevelUpNavigation()
+                    val authViewModel: AuthViewModel = hiltViewModel()
+                    val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
+
+                    LevelUpNavigation(startAtHome = isLoggedIn, authViewModel = authViewModel)
                 }
             }
         }

@@ -1,10 +1,17 @@
 package com.levelup.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "users")
 data class User(
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val nombre: String,
+    val apellido: String,
     val email: String,
-    val telefono: String? = null,
-    val direccion: String? = null,
-    val avatarUrl: String? = null
+    val telefono: String,
+    val password: String,
+    val direccion: String = "",
+    val avatarUrl: String = ""
 )

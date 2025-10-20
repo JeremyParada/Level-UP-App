@@ -6,6 +6,9 @@ import com.google.gson.GsonBuilder
 import com.levelup.data.repository.CartRepository
 import com.levelup.data.repository.ProductRepository
 import com.levelup.data.repository.ProductRepositoryImpl
+import com.levelup.data.AppDatabase
+import com.levelup.data.UserDao
+import com.levelup.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +41,23 @@ object AppModule {
     @Singleton
     fun provideCartRepository(): CartRepository {
         return CartRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return AppDatabase.getDatabase(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(database: AppDatabase): UserDao {
+        return database.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(userDao: UserDao): UserRepository {
+        return UserRepository(userDao)
     }
 }
