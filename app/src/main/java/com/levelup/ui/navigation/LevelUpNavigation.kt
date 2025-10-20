@@ -20,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.levelup.ui.screens.*
+import com.levelup.ui.screens.auth.RegisterScreen
 
 data class BottomNavItem(
     val route: String,
@@ -106,6 +107,10 @@ fun LevelUpNavigation() {
             
             composable(Screen.Register.route) {
                 RegisterScreen(navController)
+            }
+
+            composable(Screen.Login.route) {
+                LoginScreen(navController)
             }
         }
     }
