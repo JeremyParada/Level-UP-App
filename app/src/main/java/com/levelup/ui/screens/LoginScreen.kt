@@ -5,12 +5,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,6 +32,8 @@ fun LoginScreen(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    var passwordVisible by remember { mutableStateOf(false) }
 
     // If already logged, navigate back or to profile
     if (currentUser != null) {
@@ -68,6 +74,13 @@ fun LoginScreen(
                 onValueChange = { password = it },
                 label = { Text("Contraseña") },
                 leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val image = if (passwordVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(image, contentDescription = "Mostrar/Ocultar contraseña")
+                    }
+                },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -106,9 +119,10 @@ fun LoginScreen(
             if (testUsers.isNotEmpty()) {
                 Text("Usuarios de prueba:", style = MaterialTheme.typography.titleSmall)
                 testUsers.forEach { u ->
-                    Text("${u.nombre} — ${u.email}", style = MaterialTheme.typography.bodySmall)
+                    if (u.id in setOf("u1", "u2", "u3")) {
+                        Text("${u.nombre} — ${u.email}", style = MaterialTheme.typography.bodySmall)
                 }
             }
         }
     }
-}
+}}
