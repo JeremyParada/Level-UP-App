@@ -402,20 +402,20 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
-
       static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
 
       static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
 
-      @KeepFieldType
-      AuthViewModel com_levelup_ui_auth_AuthViewModel2;
+      static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
 
       @KeepFieldType
       ProductViewModel com_levelup_viewmodel_ProductViewModel2;
 
       @KeepFieldType
       CartViewModel com_levelup_viewmodel_CartViewModel2;
+
+      @KeepFieldType
+      AuthViewModel com_levelup_ui_auth_AuthViewModel2;
     }
   }
 
