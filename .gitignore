@@ -47,3 +47,4 @@ out/
 # Backup files
 *_backup.*
 gradle_backup.txt
+instantclient_windows/oraociei.dll
