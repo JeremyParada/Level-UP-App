@@ -144,7 +144,7 @@ fun ProfileMenuSection(navController: NavController) {
         ProfileMenuItem(
             icon = Icons.Default.Person,
             title = "Información Personal",
-            onClick = { /* TODO */ }
+            onClick = { navController.navigate(Screen.PersonalInfo.route) }
         )
 
         ProfileMenuItem(
