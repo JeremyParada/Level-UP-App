@@ -47,4 +47,36 @@ class AuthRepositoryImpl @Inject constructor(): AuthRepository {
     override fun getAllUsers(): List<User> {
         return users.values.map { it.first }
     }
+
+    override suspend fun updateUser(user: User): AuthResult {
+        val existingEntry = users.values.firstOrNull { it.first.id == user.id }
+        return if (existingEntry != null) {
+            val emailKey = existingEntry.first.email.lowercase()
+            val password = users[emailKey]?.second ?: "password"
+            users[emailKey] = Pair(user, password)
+            AuthResult.Success(user)
+        } else {
+            AuthResult.Error("Usuario no encontrado")
+        }
+    }
+
+    override suspend fun deleteUserData(userId: String): AuthResult {
+        val emailKey = users.entries.find { it.value.first.id == userId }?.key
+        return if (emailKey != null) {
+            val user = users[emailKey]?.first
+            val password = users[emailKey]?.second
+            // Eliminar teléfono y dirección (mantener cuenta y correo)
+            if (user != null) {
+                val updatedUser = user.copy(telefono = null, direccion = null)
+                users[emailKey] = Pair(updatedUser, password ?: "")
+                AuthResult.Success(updatedUser)
+            } else {
+                AuthResult.Error("Usuario no encontrado")
+            }
+        } else {
+            AuthResult.Error("Usuario no encontrado")
+        }
+    }
+
+
 }
