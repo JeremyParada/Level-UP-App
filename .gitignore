@@ -3,7 +3,10 @@
 build/
 */build/
 gradle-wrapper.jar
+<<<<<<< HEAD
 app/build/
+=======
+>>>>>>> 132744ef48180587ae3e16a0568bb51586656182
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -47,8 +50,11 @@ out/
 # Backup files
 *_backup.*
 gradle_backup.txt
+<<<<<<< HEAD
 instantclient_windows/oraociei.dll
 instantclient_windows/oraociei.dll
 instantclient_windows/oraociei.dll
 instantclient_windows/oraociei.dll
 instantclient_windows/oraociei.dll
+=======
+>>>>>>> 132744ef48180587ae3e16a0568bb51586656182

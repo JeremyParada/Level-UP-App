@@ -62,6 +62,7 @@ fun CartScreen(
             }
         }
     ) { paddingValues ->
+<<<<<<< HEAD
         when (uiState) {
             is CartUiState.Loading -> {
                 Box(
@@ -107,6 +108,25 @@ fun CartScreen(
                     )
                 }
             }
+=======
+        if (uiState.items.isEmpty()) {
+            EmptyCartContent(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            )
+        } else {
+            CartContent(
+                items = uiState.items,
+                onQuantityChange = { productId, quantity ->
+                    viewModel.updateQuantity(productId, quantity)
+                },
+                onRemoveItem = { productId ->
+                    viewModel.removeFromCart(productId)
+                },
+                modifier = Modifier.padding(paddingValues)
+            )
+>>>>>>> 132744ef48180587ae3e16a0568bb51586656182
         }
     }
 }

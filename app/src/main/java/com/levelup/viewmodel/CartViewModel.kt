@@ -3,9 +3,15 @@ package com.levelup.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.levelup.data.model.CartItem
+<<<<<<< HEAD
 import com.levelup.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+=======
+import com.levelup.data.model.Product
+import com.levelup.data.repository.CartRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+>>>>>>> 132744ef48180587ae3e16a0568bb51586656182
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -24,6 +30,7 @@ class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
 
+<<<<<<< HEAD
     private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
     val uiState: StateFlow<CartUiState> = _uiState
 
@@ -63,5 +70,35 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             cartRepository.clearCart(userId)
         }
+=======
+    val uiState: StateFlow<CartUiState> = cartRepository.cartItems
+        .map { items ->
+            CartUiState(
+                items = items,
+                total = cartRepository.getTotal(),
+                itemCount = cartRepository.getItemCount()
+            )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = CartUiState()
+        )
+
+    fun addToCart(product: Product, quantity: Int = 1) {
+        cartRepository.addToCart(product, quantity)
+    }
+
+    fun removeFromCart(productId: String) {
+        cartRepository.removeFromCart(productId)
+    }
+
+    fun updateQuantity(productId: String, quantity: Int) {
+        cartRepository.updateQuantity(productId, quantity)
+    }
+
+    fun clearCart() {
+        cartRepository.clearCart()
+>>>>>>> 132744ef48180587ae3e16a0568bb51586656182
     }
 }
