@@ -3,9 +3,9 @@ package com.levelup.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.levelup.data.model.CartItem
-import com.levelup.data.model.Product
 import com.levelup.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -24,33 +24,44 @@ class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
 
-    val uiState: StateFlow<CartUiState> = cartRepository.cartItems
-        .map { items ->
-            CartUiState(
-                items = items,
-                total = cartRepository.getTotal(),
-                itemCount = cartRepository.getItemCount()
-            )
+    private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
+    val uiState: StateFlow<CartUiState> = _uiState
+
+    fun loadCart(userId: String) {
+        viewModelScope.launch {
+            _uiState.value = CartUiState.Loading
+            cartRepository.getCart(userId)
+                .onSuccess { cartItems ->
+                    _uiState.value = CartUiState.Success(cartItems)
+                }
+                .onFailure { error ->
+                    _uiState.value = CartUiState.Error(error.message ?: "Error desconocido")
+                }
         }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = CartUiState()
-        )
-
-    fun addToCart(product: Product, quantity: Int = 1) {
-        cartRepository.addToCart(product, quantity)
     }
 
-    fun removeFromCart(productId: String) {
-        cartRepository.removeFromCart(productId)
+    fun addToCart(userId: String, productId: String, quantity: Int) {
+        viewModelScope.launch {
+            cartRepository.addToCart(userId, productId, quantity)
+            loadCart(userId)
+        }
     }
 
-    fun updateQuantity(productId: String, quantity: Int) {
-        cartRepository.updateQuantity(productId, quantity)
+    fun updateCartItemQuantity(cartItemId: String, quantity: Int) {
+        viewModelScope.launch {
+            cartRepository.updateCartItemQuantity(cartItemId, quantity)
+        }
     }
 
-    fun clearCart() {
-        cartRepository.clearCart()
+    fun removeCartItem(cartItemId: String) {
+        viewModelScope.launch {
+            cartRepository.removeCartItem(cartItemId)
+        }
+    }
+
+    fun clearCart(userId: String) {
+        viewModelScope.launch {
+            cartRepository.clearCart(userId)
+        }
     }
 }
