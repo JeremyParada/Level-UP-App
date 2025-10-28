@@ -70,5 +70,37 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    // === NUEVO CÓDIGO DENTRO DE AuthViewModel.kt ===
+
+    fun updateUserInfo(
+        userId: String,
+        nombre: String,
+        telefono: String?,
+        direccion: String?
+    ) {
+        viewModelScope.launch {
+            val current = authRepository.getUserById(userId)
+            if (current != null) {
+                val updatedUser = current.copy(
+                    nombre = nombre,
+                    telefono = telefono,
+                    direccion = direccion
+                )
+                authRepository.updateUser(updatedUser)
+                _uiState.update { it.copy(user = updatedUser) }
+            }
+        }
+    }
+
+    fun deleteUserInfo(userId: String) {
+        viewModelScope.launch {
+            val result = authRepository.deleteUserData(userId)
+            if (result is AuthResult.Success) {
+                _uiState.update { it.copy(user = result.user) }
+            }
+        }
+    }
+
+
     fun getAllTestUsers() = authRepository.getAllUsers()
 }

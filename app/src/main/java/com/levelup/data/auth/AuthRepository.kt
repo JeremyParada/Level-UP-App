@@ -13,4 +13,6 @@ interface AuthRepository {
     suspend fun register(user: User, password: String): AuthResult
     suspend fun getUserById(id: String): User?
     fun getAllUsers(): List<User>
+    suspend fun updateUser(user: User): AuthResult
+    suspend fun deleteUserData(userId: String): AuthResult
 }

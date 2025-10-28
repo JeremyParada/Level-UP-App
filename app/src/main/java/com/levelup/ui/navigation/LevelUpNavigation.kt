@@ -112,6 +112,11 @@ fun LevelUpNavigation() {
             composable(Screen.Login.route) {
                 LoginScreen(navController)
             }
+
+            composable(Screen.PersonalInfo.route) {
+                PersonalInfoScreen(navController)
+            }
+
         }
     }
 }
