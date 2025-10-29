@@ -2,8 +2,11 @@ package com.levelup.data.remote
 
 import com.levelup.data.model.Address
 import com.levelup.data.model.CartItem
+import com.levelup.data.model.Category
+import com.levelup.data.model.Product
 import retrofit2.Response
 import retrofit2.http.*
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -32,4 +35,20 @@ interface ApiService {
 
     @POST("api/direcciones")
     suspend fun createAddress(@Body address: Address): Response<Unit>
+
+    // Obtener todos los productos
+    @GET("api/productos")
+    suspend fun getAllProducts(): Response<List<Product>>
+
+    // Obtener producto por código
+    @GET("api/productos/{codigo}")
+    suspend fun getProductByCode(@Path("codigo") codigo: String): Response<Product>
+
+    // Obtener todas las categorías
+    @GET("api/productos/categorias")
+    suspend fun getCategories(): Response<List<Category>>
+
+    // Obtener productos por categoría
+    @GET("api/productos/categoria/{idCategoria}")
+    suspend fun getProductsByCategory(@Path("idCategoria") idCategoria: String): Response<List<Product>>
 }

@@ -10,7 +10,7 @@ const pedidosRouter = require('./routes/pedidos');
 const resenasRouter = require('./routes/resenas');
 const carritoRouter = require('./routes/carrito');  // ← NUEVO
 const referidosRoutes = require('./routes/referidosRoutes');
-const direccionesRoutes = require('./routes/direcciones');
+const direccionesRoutes = require('./routes/direcciones'); // Asegúrate de importar las rutas
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,7 +27,7 @@ app.use('/api/pedidos', pedidosRouter);
 app.use('/api/resenas', resenasRouter);
 app.use('/api/carrito', carritoRouter);  // ← NUEVO
 app.use('/api', referidosRoutes);
-app.use('/api/direcciones', direccionesRoutes);
+app.use('/api/direcciones', direccionesRoutes); // Asegúrate de registrar las rutas aquí
 
 // Ruta de prueba
 app.get('/api/health', (req, res) => {

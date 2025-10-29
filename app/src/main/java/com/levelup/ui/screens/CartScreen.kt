@@ -62,53 +62,6 @@ fun CartScreen(
             }
         }
     ) { paddingValues ->
-<<<<<<< HEAD
-        when (uiState) {
-            is CartUiState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-            is CartUiState.Success -> {
-                val cartItems = (uiState as CartUiState.Success).cartItems
-                if (cartItems.isEmpty()) {
-                    EmptyCartContent(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
-                    )
-                } else {
-                    CartContent(
-                        items = cartItems,
-                        onQuantityChange = { productId, quantity ->
-                            viewModel.updateQuantity(productId, quantity)
-                        },
-                        onRemoveItem = { productId ->
-                            viewModel.removeFromCart(productId)
-                        },
-                        modifier = Modifier.padding(paddingValues)
-                    )
-                }
-            }
-            is CartUiState.Error -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Error: ${(uiState as CartUiState.Error).message}",
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
-=======
         if (uiState.items.isEmpty()) {
             EmptyCartContent(
                 modifier = Modifier
@@ -126,7 +79,6 @@ fun CartScreen(
                 },
                 modifier = Modifier.padding(paddingValues)
             )
->>>>>>> 132744ef48180587ae3e16a0568bb51586656182
         }
     }
 }

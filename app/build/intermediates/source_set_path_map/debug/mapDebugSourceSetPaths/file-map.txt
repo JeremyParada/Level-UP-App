@@ -49,11 +49,11 @@ com.levelup.app-jetified-animation-core-release-47 C:\Users\jeremy.parada\.gradl
 com.levelup.app-jetified-startup-runtime-1.1.1-48 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\bd2519880a94ccaa40c2ec235c88724f\transformed\jetified-startup-runtime-1.1.1\res
 com.levelup.app-jetified-ui-test-manifest-1.6.1-49 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\bdc0ca4294aa5edfe3b97d419a283fb3\transformed\jetified-ui-test-manifest-1.6.1\res
 com.levelup.app-jetified-appcompat-resources-1.6.1-50 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\c602ca131d561ba7223dccec840aefb6\transformed\jetified-appcompat-resources-1.6.1\res
-com.levelup.app-jetified-material3-release-51 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\c6801c8ece53504ae04bab46d312d229\transformed\jetified-material3-release\res
-com.levelup.app-navigation-runtime-ktx-2.7.6-52 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\cb92d63ffdc8342273759e10465627ce\transformed\navigation-runtime-ktx-2.7.6\res
-com.levelup.app-jetified-coil-base-2.5.0-53 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\ccf391b7868a10d1e7dca7280da44e34\transformed\jetified-coil-base-2.5.0\res
-com.levelup.app-jetified-savedstate-ktx-1.2.1-54 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\d9f3c96549fd31f9f4877a1acc1cf5e8\transformed\jetified-savedstate-ktx-1.2.1\res
-com.levelup.app-jetified-ui-util-release-55 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\res
+com.levelup.app-navigation-runtime-ktx-2.7.6-51 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\cb92d63ffdc8342273759e10465627ce\transformed\navigation-runtime-ktx-2.7.6\res
+com.levelup.app-jetified-coil-base-2.5.0-52 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\ccf391b7868a10d1e7dca7280da44e34\transformed\jetified-coil-base-2.5.0\res
+com.levelup.app-jetified-savedstate-ktx-1.2.1-53 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\d9f3c96549fd31f9f4877a1acc1cf5e8\transformed\jetified-savedstate-ktx-1.2.1\res
+com.levelup.app-jetified-ui-util-release-54 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\res
+com.levelup.app-jetified-material3-release-55 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\ecd0a7247f0e13a812ca732318234d9d\transformed\jetified-material3-release\res
 com.levelup.app-jetified-material-ripple-release-56 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\f7bc284520c4c3823a75c2e95fac3bae\transformed\jetified-material-ripple-release\res
 com.levelup.app-jetified-hilt-navigation-compose-1.1.0-57 C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\faf35b690c7452687c81fb2ebae99e97\transformed\jetified-hilt-navigation-compose-1.1.0\res
 com.levelup.app-resValues-58 C:\Users\jeremy.parada\Desktop\Level-UP-App\app\build\generated\res\resValues\debug

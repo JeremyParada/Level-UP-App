@@ -3,15 +3,10 @@ package com.levelup.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.levelup.data.model.CartItem
-<<<<<<< HEAD
-import com.levelup.data.repository.CartRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-=======
 import com.levelup.data.model.Product
 import com.levelup.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
->>>>>>> 132744ef48180587ae3e16a0568bb51586656182
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -30,47 +25,6 @@ class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
 
-<<<<<<< HEAD
-    private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
-    val uiState: StateFlow<CartUiState> = _uiState
-
-    fun loadCart(userId: String) {
-        viewModelScope.launch {
-            _uiState.value = CartUiState.Loading
-            cartRepository.getCart(userId)
-                .onSuccess { cartItems ->
-                    _uiState.value = CartUiState.Success(cartItems)
-                }
-                .onFailure { error ->
-                    _uiState.value = CartUiState.Error(error.message ?: "Error desconocido")
-                }
-        }
-    }
-
-    fun addToCart(userId: String, productId: String, quantity: Int) {
-        viewModelScope.launch {
-            cartRepository.addToCart(userId, productId, quantity)
-            loadCart(userId)
-        }
-    }
-
-    fun updateCartItemQuantity(cartItemId: String, quantity: Int) {
-        viewModelScope.launch {
-            cartRepository.updateCartItemQuantity(cartItemId, quantity)
-        }
-    }
-
-    fun removeCartItem(cartItemId: String) {
-        viewModelScope.launch {
-            cartRepository.removeCartItem(cartItemId)
-        }
-    }
-
-    fun clearCart(userId: String) {
-        viewModelScope.launch {
-            cartRepository.clearCart(userId)
-        }
-=======
     val uiState: StateFlow<CartUiState> = cartRepository.cartItems
         .map { items ->
             CartUiState(
@@ -99,6 +53,5 @@ class CartViewModel @Inject constructor(
 
     fun clearCart() {
         cartRepository.clearCart()
->>>>>>> 132744ef48180587ae3e16a0568bb51586656182
     }
 }

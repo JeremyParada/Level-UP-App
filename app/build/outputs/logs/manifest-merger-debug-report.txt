@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-27:12
+ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:2:1-28:12
 MERGED from [androidx.hilt:hilt-navigation-compose:1.1.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\faf35b690c7452687c81fb2ebae99e97\transformed\jetified-hilt-navigation-compose-1.1.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.hilt:hilt-navigation:1.1.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\15b2a61b9cc12f5bd8ff69593b02089c\transformed\jetified-hilt-navigation-1.1.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-common:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\abfbed2f55f9b53b9bb28b9e15b718c4\transformed\navigation-common-2.7.6\AndroidManifest.xml:17:1-22:12
@@ -11,7 +11,7 @@ MERGED from [androidx.navigation:navigation-runtime:2.7.6] C:\Users\jeremy.parad
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\513680296bc3c59b489e4b7822bfe676\transformed\navigation-common-ktx-2.7.6\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\cb92d63ffdc8342273759e10465627ce\transformed\navigation-runtime-ktx-2.7.6\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-compose:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\8726620368900eca844edb4d111a54b7\transformed\jetified-navigation-compose-2.7.6\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.material3:material3-android:1.2.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\c6801c8ece53504ae04bab46d312d229\transformed\jetified-material3-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\ecd0a7247f0e13a812ca732318234d9d\transformed\jetified-material3-release\AndroidManifest.xml:17:1-22:12
 MERGED from [io.coil-kt:coil-compose:2.5.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\0882c585a7323a55e189617f533dad5f\transformed\jetified-coil-compose-2.5.0\AndroidManifest.xml:2:1-7:12
 MERGED from [io.coil-kt:coil-compose-base:2.5.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\573f8aa13e4bcd4aefc85ac90a9a0cd9\transformed\jetified-coil-compose-base-2.5.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\75d58a090dc159f1cc9c3f3fb7b818b8\transformed\jetified-material-release\AndroidManifest.xml:2:1-7:12
@@ -23,10 +23,10 @@ MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.1] C:\Use
 MERGED from [androidx.compose.animation:animation-core-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\bc1a310b13969481b98232972767aea0\transformed\jetified-animation-core-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.animation:animation-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\2f0052f617983e527b29c623f1b0684b\transformed\jetified-animation-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\94db472c09ef5f7a5eb2409d792bc2f5\transformed\jetified-ui-tooling-data-release\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\234f934737aa0c89de719b6464d8b6f5\transformed\jetified-ui-text-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-unit-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\5236abddddeaa6284f008e824bca160e\transformed\jetified-ui-unit-release\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-geometry-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\3e69cf974656c2a5764cd739b8ae26b8\transformed\jetified-ui-geometry-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\234f934737aa0c89de719b6464d8b6f5\transformed\jetified-ui-text-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\8e593538dcd0aba0c7bd96eb05c6bbd8\transformed\jetified-ui-tooling-preview-release\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.ui:ui-tooling-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\00c64ebe792fff440834c955f7b719f5\transformed\jetified-ui-tooling-release\AndroidManifest.xml:17:1-28:12
 MERGED from [androidx.compose.ui:ui-graphics-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\7ed5c2c996e4a2a1cd940cbc7de61228\transformed\jetified-ui-graphics-release\AndroidManifest.xml:2:1-7:12
@@ -93,8 +93,8 @@ ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManif
 	android:name
 		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:7:5-25:19
-INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:7:5-25:19
+ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:7:5-26:19
+INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:7:5-26:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\00c64ebe792fff440834c955f7b719f5\transformed\jetified-ui-tooling-release\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\00c64ebe792fff440834c955f7b719f5\transformed\jetified-ui-tooling-release\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.compose.ui:ui-test-manifest:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\bdc0ca4294aa5edfe3b97d419a283fb3\transformed\jetified-ui-test-manifest-1.6.1\AndroidManifest.xml:22:5-26:19
@@ -122,33 +122,35 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\jeremy.parada\.gra
 	android:roundIcon
 		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:12:9-54
 	tools:targetApi
-		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:15:9-29
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:16:9-29
 	android:icon
 		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:10:9-43
 	android:allowBackup
 		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:9:9-35
 	android:theme
 		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:14:9-45
+	android:usesCleartextTraffic
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:15:9-44
 	android:name
 		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:8:9-43
 activity#com.levelup.MainActivity
-ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:16:9-24:20
+ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:17:9-25:20
 	android:exported
-		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:18:13-36
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:19:13-36
 	android:theme
-		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:19:13-49
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:20:13-49
 	android:name
-		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:17:13-41
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:18:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:20:13-23:29
+ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:21:13-24:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:21:17-69
+ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:22:17-69
 	android:name
-		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:21:25-66
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:22:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:22:17-77
+ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:23:17-77
 	android:name
-		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:22:27-74
+		ADDED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml:23:27-74
 uses-sdk
 INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\jeremy.parada\Desktop\Level-UP-App\app\src\main\AndroidManifest.xml
@@ -167,8 +169,8 @@ MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] C:\Users\jeremy.p
 MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\cb92d63ffdc8342273759e10465627ce\transformed\navigation-runtime-ktx-2.7.6\AndroidManifest.xml:5:5-44
 MERGED from [androidx.navigation:navigation-compose:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\8726620368900eca844edb4d111a54b7\transformed\jetified-navigation-compose-2.7.6\AndroidManifest.xml:5:5-44
 MERGED from [androidx.navigation:navigation-compose:2.7.6] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\8726620368900eca844edb4d111a54b7\transformed\jetified-navigation-compose-2.7.6\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.material3:material3-android:1.2.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\c6801c8ece53504ae04bab46d312d229\transformed\jetified-material3-release\AndroidManifest.xml:20:5-44
-MERGED from [androidx.compose.material3:material3-android:1.2.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\c6801c8ece53504ae04bab46d312d229\transformed\jetified-material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\ecd0a7247f0e13a812ca732318234d9d\transformed\jetified-material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\ecd0a7247f0e13a812ca732318234d9d\transformed\jetified-material3-release\AndroidManifest.xml:20:5-44
 MERGED from [io.coil-kt:coil-compose:2.5.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\0882c585a7323a55e189617f533dad5f\transformed\jetified-coil-compose-2.5.0\AndroidManifest.xml:5:5-44
 MERGED from [io.coil-kt:coil-compose:2.5.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\0882c585a7323a55e189617f533dad5f\transformed\jetified-coil-compose-2.5.0\AndroidManifest.xml:5:5-44
 MERGED from [io.coil-kt:coil-compose-base:2.5.0] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\573f8aa13e4bcd4aefc85ac90a9a0cd9\transformed\jetified-coil-compose-base-2.5.0\AndroidManifest.xml:5:5-44
@@ -191,14 +193,14 @@ MERGED from [androidx.compose.animation:animation-android:1.6.1] C:\Users\jeremy
 MERGED from [androidx.compose.animation:animation-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\2f0052f617983e527b29c623f1b0684b\transformed\jetified-animation-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\94db472c09ef5f7a5eb2409d792bc2f5\transformed\jetified-ui-tooling-data-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\94db472c09ef5f7a5eb2409d792bc2f5\transformed\jetified-ui-tooling-data-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\234f934737aa0c89de719b6464d8b6f5\transformed\jetified-ui-text-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\234f934737aa0c89de719b6464d8b6f5\transformed\jetified-ui-text-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-unit-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\5236abddddeaa6284f008e824bca160e\transformed\jetified-ui-unit-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-unit-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\5236abddddeaa6284f008e824bca160e\transformed\jetified-ui-unit-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-geometry-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\3e69cf974656c2a5764cd739b8ae26b8\transformed\jetified-ui-geometry-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-geometry-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\3e69cf974656c2a5764cd739b8ae26b8\transformed\jetified-ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\e6ffcc3a668b572878e0196adad14a16\transformed\jetified-ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\234f934737aa0c89de719b6464d8b6f5\transformed\jetified-ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\234f934737aa0c89de719b6464d8b6f5\transformed\jetified-ui-text-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\8e593538dcd0aba0c7bd96eb05c6bbd8\transformed\jetified-ui-tooling-preview-release\AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\8e593538dcd0aba0c7bd96eb05c6bbd8\transformed\jetified-ui-tooling-preview-release\AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.ui:ui-tooling-android:1.6.1] C:\Users\jeremy.parada\.gradle\caches\8.9\transforms\00c64ebe792fff440834c955f7b719f5\transformed\jetified-ui-tooling-release\AndroidManifest.xml:20:5-44
