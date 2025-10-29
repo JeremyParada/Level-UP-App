@@ -47,7 +47,7 @@ object AppModule { // <-- cambiar a objeto que expone @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://54.82.155.103:3001/")
+            .baseUrl("http://13.221.131.79:3001/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
