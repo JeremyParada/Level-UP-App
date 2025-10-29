@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.levelup.app-mergeDebugResources-57:/values/values.xml",
+            "outputFile": "com.levelup.app-mergeDebugResources-60:/values/values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\jeremy.parada\\.gradle\\caches\\8.9\\transforms\\c602ca131d561ba7223dccec840aefb6\\transformed\\jetified-appcompat-resources-1.6.1\\res\\values\\values.xml",

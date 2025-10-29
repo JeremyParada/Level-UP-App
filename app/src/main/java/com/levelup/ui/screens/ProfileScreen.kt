@@ -18,32 +18,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.levelup.ui.auth.AuthViewModel
 import com.levelup.ui.navigation.Screen
 import com.levelup.ui.theme.LevelUpPrimary
 import com.levelup.ui.theme.LevelUpSecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navController: NavController) {
-    // Estado simulado del usuario
-    var isLoggedIn by remember { mutableStateOf(false) }
-    val userName = "Gamer Pro"
-    val userEmail = "gamer@levelup.com"
+fun ProfileScreen(
+    navController: NavController,
+    viewModel: AuthViewModel = hiltViewModel()
+) {
+    val currentUser by viewModel.currentUser.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = "Mi Perfil",
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = LevelUpPrimary,
-                    titleContentColor = Color.White
-                )
+                title = { Text("Mi Perfil", fontWeight = FontWeight.Bold) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = LevelUpPrimary, titleContentColor = Color.White)
             )
         }
     ) { paddingValues ->
@@ -53,37 +47,27 @@ fun ProfileScreen(navController: NavController) {
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
-            if (isLoggedIn) {
-                // Perfil de usuario logueado
-                ProfileHeader(userName, userEmail)
-                
+            if (currentUser != null) {
+                ProfileHeader(currentUser!!.nombre, currentUser!!.email)
                 Spacer(modifier = Modifier.height(24.dp))
-                
                 ProfileMenuSection(navController)
-                
                 Spacer(modifier = Modifier.height(16.dp))
-                
-                // Botón de cerrar sesión
+
                 Button(
-                    onClick = { isLoggedIn = false },
+                    onClick = { viewModel.logout() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error
-                    )
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
                     Icon(Icons.Default.ExitToApp, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Cerrar Sesión")
                 }
             } else {
-                // Vista de no logueado
                 GuestProfileContent(
-                    onLoginClick = { isLoggedIn = true },
-                    onRegisterClick = {
-                        navController.navigate(Screen.Register.route)
-                    }
+                    onLoginClick = { navController.navigate(Screen.Login.route) },
+                    onRegisterClick = { navController.navigate(Screen.Register.route) }
                 )
             }
         }
@@ -160,7 +144,7 @@ fun ProfileMenuSection(navController: NavController) {
         ProfileMenuItem(
             icon = Icons.Default.Person,
             title = "Información Personal",
-            onClick = { /* TODO */ }
+            onClick = { navController.navigate(Screen.PersonalInfo.route) }
         )
 
         ProfileMenuItem(

@@ -6,6 +6,7 @@ import com.levelup.data.model.CartItem
 import com.levelup.data.model.Product
 import com.levelup.data.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

@@ -25,6 +25,8 @@ import com.levelup.ui.theme.LevelUpPrimary
 import com.levelup.ui.theme.LevelUpSecondary
 import com.levelup.utils.Formatters
 import com.levelup.viewmodel.CartViewModel
+import com.levelup.viewmodel.ProductViewModel
+import com.levelup.viewmodel.ProductViewModel.ProductDetailUiState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,34 +34,17 @@ import kotlinx.coroutines.launch
 fun ProductDetailScreen(
     productId: String,
     navController: NavController,
-    productRepository: ProductRepository = hiltViewModel<com.levelup.viewmodel.ProductViewModel>().let {
-        androidx.compose.ui.platform.LocalContext.current.let { context ->
-            com.levelup.di.AppModule.provideProductRepository(
-                context,
-                com.levelup.di.AppModule.provideGson()
-            )
-        }
-    },
+    viewModel: ProductViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
-    var product by remember { mutableStateOf<Product?>(null) }
     var quantity by remember { mutableStateOf(1) }
-    var isLoading by remember { mutableStateOf(true) }
-    var error by remember { mutableStateOf<String?>(null) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
+    val productDetailState by viewModel.productDetailState.collectAsState()
+
     LaunchedEffect(productId) {
-        isLoading = true
-        productRepository.getProductById(productId)
-            .onSuccess {
-                product = it
-                isLoading = false
-            }
-            .onFailure {
-                error = it.message
-                isLoading = false
-            }
+        viewModel.loadProductDetail(productId)
     }
 
     Scaffold(
@@ -80,7 +65,8 @@ fun ProductDetailScreen(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
-            product?.let { prod ->
+            if (productDetailState is ProductDetailUiState.Success) {
+                val prod = (productDetailState as ProductDetailUiState.Success).product
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
                     shadowElevation = 8.dp,
@@ -134,8 +120,8 @@ fun ProductDetailScreen(
             }
         }
     ) { paddingValues ->
-        when {
-            isLoading -> {
+        when (productDetailState) {
+            is ProductDetailUiState.Loading -> {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -145,7 +131,7 @@ fun ProductDetailScreen(
                     CircularProgressIndicator()
                 }
             }
-            error != null -> {
+            is ProductDetailUiState.Error -> {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -153,14 +139,15 @@ fun ProductDetailScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = error ?: "Error desconocido",
+                        text = (productDetailState as ProductDetailUiState.Error).message ?: "Error desconocido",
                         color = MaterialTheme.colorScheme.error
                     )
                 }
             }
-            product != null -> {
+            is ProductDetailUiState.Success -> {
+                val product = (productDetailState as ProductDetailUiState.Success).product
                 ProductDetailContent(
-                    product = product!!,
+                    product = product,
                     quantity = quantity,
                     onQuantityChange = { newQuantity ->
                         if (newQuantity > 0) quantity = newQuantity

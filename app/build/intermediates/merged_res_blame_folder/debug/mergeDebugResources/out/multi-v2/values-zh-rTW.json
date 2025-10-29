@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.levelup.app-mergeDebugResources-57:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.levelup.app-mergeDebugResources-60:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\jeremy.parada\\.gradle\\caches\\8.9\\transforms\\c6801c8ece53504ae04bab46d312d229\\transformed\\jetified-material3-release\\res\\values-zh-rTW\\values-zh-rTW.xml",
