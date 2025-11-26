@@ -17,7 +17,7 @@ class CartRepository @Inject constructor() {
     fun addToCart(product: Product, quantity: Int = 1) {
         val currentCart = _cartItems.value.toMutableList()
         // CORREGIDO: usar codigo en lugar de id
-        val existingItem = currentCart.find { it.product.codigo == product.codigo }
+        val existingItem = currentCart.find { it.product.idProducto == product.idProducto }
 
         if (existingItem != null) {
             existingItem.quantity += quantity
@@ -28,15 +28,15 @@ class CartRepository @Inject constructor() {
         _cartItems.value = currentCart
     }
 
-    fun removeFromCart(productId: String) {
+    fun removeFromCart(productId: Int) {
         // CORREGIDO: usar codigo en lugar de id
-        _cartItems.value = _cartItems.value.filter { it.product.codigo != productId }
+        _cartItems.value = _cartItems.value.filter { it.product.idProducto != productId }
     }
 
-    fun updateQuantity(productId: String, quantity: Int) {
+    fun updateQuantity(productId: Int, quantity: Int) {
         val currentCart = _cartItems.value.toMutableList()
         // CORREGIDO: usar codigo en lugar de id
-        val item = currentCart.find { it.product.codigo == productId }
+        val item = currentCart.find { it.product.idProducto == productId }
         
         if (item != null) {
             if (quantity <= 0) {

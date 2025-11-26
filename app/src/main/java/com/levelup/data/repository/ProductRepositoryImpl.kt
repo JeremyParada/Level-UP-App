@@ -22,7 +22,7 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProductById(id: String): Result<Product> {
+    override suspend fun getProductById(id: Int): Result<Product> {
         return try {
             val response = apiService.getProductByCode(id)
             if (response.isSuccessful && response.body() != null) {
@@ -65,7 +65,7 @@ class ProductRepositoryImpl @Inject constructor(
         return try {
             val products = getAllProducts().getOrThrow()
             val filtered = products.filter {
-                it.nombre.contains(query, ignoreCase = true) ||
+                it.nombreProducto.contains(query, ignoreCase = true) ||
                 it.descripcion.contains(query, ignoreCase = true)
             }
             Result.success(filtered)

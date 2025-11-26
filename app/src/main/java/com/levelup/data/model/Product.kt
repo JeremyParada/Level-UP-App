@@ -1,37 +1,35 @@
-// filepath: app/src/main/java/com/levelup/data/model/Product.kt
 package com.levelup.data.model
 
 import com.google.gson.annotations.SerializedName
 
 data class Product(
-    @SerializedName("codigo")
-    val codigo: String,
+    @SerializedName("idProducto")
+    val idProducto: Int,
 
-    @SerializedName("nombre")
-    val nombre: String,
+    @SerializedName("categoria")
+    val categoria: Category,
 
-    @SerializedName("descripcion")
-    val descripcion: String,
+    @SerializedName("codigoProducto")
+    val codigoProducto: String,
+
+    @SerializedName("nombreProducto")
+    val nombreProducto: String,
 
     @SerializedName("precio")
     val precio: Double,
 
-    @SerializedName("imagen")
-    val imagen: String,
-
-    @SerializedName("categoria")
-    val categoria: String,
+    @SerializedName("descripcion")
+    val descripcion: String,
 
     @SerializedName("stock")
-    val stock: Int = 0,
+    val stock: Int,
 
-    @SerializedName("descuento")
-    val descuento: Int? = null,
+    @SerializedName("estadoProducto")
+    val estadoProducto: String,
 
-    @SerializedName("valoracion")
-    val valoracion: Double? = null
-) {
-    // Propiedad calculada para mantener compatibilidad con código que use 'id'
-    val id: String
-        get() = codigo
-}
+    @SerializedName("fechaCreacion")
+    val fechaCreacion: String,
+
+    @SerializedName("imagen")
+    val imagen: String
+)

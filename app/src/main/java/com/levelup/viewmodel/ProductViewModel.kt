@@ -104,7 +104,7 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun loadProductDetail(productId: String) {
+    fun loadProductDetail(productId: Int) {
         viewModelScope.launch {
             _productDetailState.value = ProductDetailUiState.Loading
             repository.getProductById(productId)

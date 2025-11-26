@@ -121,8 +121,8 @@ fun EmptyCartContent(modifier: Modifier = Modifier) {
 @Composable
 fun CartContent(
     items: List<CartItem>,
-    onQuantityChange: (String, Int) -> Unit,
-    onRemoveItem: (String) -> Unit,
+    onQuantityChange: (Int, Int) -> Unit,
+    onRemoveItem: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -147,8 +147,8 @@ fun CartContent(
 @Composable
 fun CartItemCard(
     item: CartItem,
-    onQuantityChange: (String, Int) -> Unit,
-    onRemove: (String) -> Unit
+    onQuantityChange: (Int, Int) -> Unit,
+    onRemove: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -172,7 +172,7 @@ fun CartItemCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = item.product.nombre.take(2).uppercase(),
+                    text = item.product.nombreProducto.take(2).uppercase(),
                     style = MaterialTheme.typography.titleLarge,
                     color = LevelUpPrimary,
                     fontWeight = FontWeight.Bold
@@ -186,7 +186,7 @@ fun CartItemCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = item.product.nombre,
+                    text = item.product.nombreProducto,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2
@@ -195,7 +195,7 @@ fun CartItemCard(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = item.product.categoria,
+                    text = item.product.categoria.nombre,
                     style = MaterialTheme.typography.bodySmall,
                     color = LevelUpSecondary
                 )
@@ -218,7 +218,7 @@ fun CartItemCard(
                 ) {
                     IconButton(
                         onClick = { 
-                            onQuantityChange(item.product.codigo, item.quantity - 1)
+                            onQuantityChange(item.product.idProducto, item.quantity - 1)
                         },
                         modifier = Modifier.size(32.dp),
                         colors = IconButtonDefaults.iconButtonColors(
@@ -243,7 +243,7 @@ fun CartItemCard(
 
                     IconButton(
                         onClick = { 
-                            onQuantityChange(item.product.codigo, item.quantity + 1)
+                            onQuantityChange(item.product.idProducto, item.quantity + 1)
                         },
                         modifier = Modifier.size(32.dp),
                         colors = IconButtonDefaults.iconButtonColors(
@@ -261,7 +261,7 @@ fun CartItemCard(
                     Spacer(modifier = Modifier.weight(1f))
 
                     IconButton(
-                        onClick = { onRemove(item.product.codigo) },
+                        onClick = { onRemove(item.product.idProducto) },
                         colors = IconButtonDefaults.iconButtonColors(
                             containerColor = MaterialTheme.colorScheme.errorContainer
                         )

@@ -1,6 +1,5 @@
 package com.levelup.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,13 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.levelup.data.model.Product
 import com.levelup.ui.navigation.Screen
 import com.levelup.ui.theme.LevelUpAccent
@@ -215,7 +211,7 @@ fun FeaturedProductsSection(products: List<Product>, navController: NavControlle
             ProductCard(
                 product = product,
                 onClick = {
-                    navController.navigate(Screen.ProductDetail.createRoute(product.codigo))
+                    navController.navigate(Screen.ProductDetail.createRoute(product.idProducto))
                 }
             )
         }
@@ -241,7 +237,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = product.nombre.take(2).uppercase(),
+                    text = product.nombreProducto.take(2).uppercase(),
                     style = MaterialTheme.typography.headlineMedium,
                     color = LevelUpPrimary
                 )
@@ -249,7 +245,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
 
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(
-                    text = product.nombre,
+                    text = product.nombreProducto,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2

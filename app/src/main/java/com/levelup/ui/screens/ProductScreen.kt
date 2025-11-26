@@ -15,7 +15,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -211,7 +210,7 @@ fun ProductsGrid(products: List<Product>, navController: NavController) {
             ProductGridItem(
                 product = product,
                 onClick = {
-                    navController.navigate(Screen.ProductDetail.createRoute(product.codigo))
+                    navController.navigate(Screen.ProductDetail.createRoute(product.idProducto))
                 }
             )
         }
@@ -237,7 +236,7 @@ fun ProductGridItem(product: Product, onClick: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = product.nombre.take(2).uppercase(),
+                    text = product.nombreProducto.take(2).uppercase(),
                     style = MaterialTheme.typography.headlineMedium,
                     color = LevelUpPrimary,
                     fontWeight = FontWeight.Bold
@@ -247,7 +246,7 @@ fun ProductGridItem(product: Product, onClick: () -> Unit) {
             Column(modifier = Modifier.padding(12.dp)) {
                 // Categoría
                 Text(
-                    text = product.categoria,
+                    text = product.categoria.nombre,
                     style = MaterialTheme.typography.labelSmall,
                     color = LevelUpSecondary,
                     modifier = Modifier.padding(bottom = 4.dp)
@@ -255,7 +254,7 @@ fun ProductGridItem(product: Product, onClick: () -> Unit) {
 
                 // Nombre del producto
                 Text(
-                    text = product.nombre,
+                    text = product.nombreProducto,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2,

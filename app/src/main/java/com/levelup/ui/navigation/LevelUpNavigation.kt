@@ -73,38 +73,41 @@ fun LevelUpNavigation() {
             composable(Screen.Home.route) {
                 HomeScreen(navController)
             }
-            
+
             composable(Screen.Products.route) {
                 ProductsScreen(navController)
             }
-            
+
             composable(
                 route = Screen.ProductDetail.route,
-                arguments = listOf(navArgument("productId") { type = NavType.StringType })
+                arguments = listOf(navArgument("productId") {
+                    type = NavType.IntType
+                })
             ) { backStackEntry ->
-                val productId = backStackEntry.arguments?.getString("productId")
+                val productId = backStackEntry.arguments?.getInt("productId") ?: 0
+
                 ProductDetailScreen(
-                    productId = productId ?: "",
+                    productId = productId,
                     navController = navController
                 )
             }
-            
+
             composable(Screen.Cart.route) {
                 CartScreen(navController)
             }
-            
+
             composable(Screen.Profile.route) {
                 ProfileScreen(navController)
             }
-            
+
             composable(Screen.Community.route) {
                 CommunityScreen(navController)
             }
-            
+
             composable(Screen.Reviews.route) {
                 ReviewsScreen(navController)
             }
-            
+
             composable(Screen.Register.route) {
                 RegisterScreen(navController)
             }
@@ -116,7 +119,7 @@ fun LevelUpNavigation() {
             composable(Screen.PersonalInfo.route) {
                 PersonalInfoScreen(navController)
             }
-
         }
+
     }
 }

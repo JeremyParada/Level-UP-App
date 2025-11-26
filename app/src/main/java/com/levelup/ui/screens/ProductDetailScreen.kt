@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen(
-    productId: String,
+    productId: Int,
     navController: NavController,
     viewModel: ProductViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel()
@@ -180,7 +180,7 @@ fun ProductDetailContent(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = product.nombre.take(3).uppercase(),
+                text = product.nombreProducto.take(3).uppercase(),
                 style = MaterialTheme.typography.displayLarge,
                 color = LevelUpPrimary,
                 fontWeight = FontWeight.Bold
@@ -198,7 +198,7 @@ fun ProductDetailContent(
                 color = LevelUpSecondary.copy(alpha = 0.1f)
             ) {
                 Text(
-                    text = product.categoria,
+                    text = product.categoria.nombre,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                     style = MaterialTheme.typography.labelMedium,
                     color = LevelUpSecondary,
@@ -210,7 +210,7 @@ fun ProductDetailContent(
 
             // Nombre del producto
             Text(
-                text = product.nombre,
+                text = product.nombreProducto,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -219,7 +219,7 @@ fun ProductDetailContent(
 
             // Código del producto
             Text(
-                text = "Código: ${product.codigo}",
+                text = "Código: ${product.idProducto}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
