@@ -15,8 +15,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.levelup.data.model.User
 import com.levelup.ui.auth.AuthViewModel
+import com.levelup.data.remote.dto.RegistroDTO
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,8 +27,10 @@ fun RegisterScreen(
 ) {
     // --- Estados de formulario ---
     var nombre by remember { mutableStateOf("") }
+    var apellido by remember { mutableStateOf("") } // Added apellido
     var email by remember { mutableStateOf("") }
     var telefono by remember { mutableStateOf("") }
+    var fechaNacimiento by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmarPassword by remember { mutableStateOf("") }
 
@@ -65,7 +67,15 @@ fun RegisterScreen(
                 OutlinedTextField(
                     value = nombre,
                     onValueChange = { nombre = it },
-                    label = { Text("Nombre completo") },
+                    label = { Text("Nombre") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = apellido,
+                    onValueChange = { apellido = it },
+                    label = { Text("Apellido") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -85,6 +95,16 @@ fun RegisterScreen(
                     label = { Text("Teléfono") },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = fechaNacimiento,
+                    onValueChange = { fechaNacimiento = it },
+                    label = { Text("Fecha de Nacimiento (YYYY-MM-DD)") },
+                    placeholder = { Text("1999-01-01") },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), 
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -122,7 +142,7 @@ fun RegisterScreen(
                 Button(
                     onClick = {
                         when {
-                            !validateForm(nombre, email, telefono, password, confirmarPassword) -> {
+                            !validateForm(nombre, apellido, email, telefono, fechaNacimiento, password, confirmarPassword) -> {
                                 scope.launch {
                                     snackbarHostState.showSnackbar("Completa todos los campos correctamente.")
                                 }
@@ -134,32 +154,23 @@ fun RegisterScreen(
                             }
                             else -> {
                                 isLoading = true
-                                authViewModel.register(
-                                    user = User(
-                                        id = "",
-                                        nombre = nombre,
-                                        email = email,
-                                        telefono = telefono,
-                                        direccion = null,
-                                        avatarUrl = null
-                                    ),
-                                    password = password
+                                val registroDTO = RegistroDTO(
+                                    nombre = nombre,
+                                    apellido = apellido, // Passing apellido
+                                    email = email,
+                                    password = password,
+                                    telefono = telefono,
+                                    fechaNacimiento = fechaNacimiento,
+                                    // Optional fields defaulting to empty
+                                    calle = "",
+                                    ciudad = "",
+                                    comuna = "",
+                                    region = "",
+                                    numero = "",
+                                    codigoPostal = ""
                                 )
 
-                                scope.launch {
-                                    authViewModel.uiState.collect { state ->
-                                        isLoading = state.isLoading
-
-                                        state.error?.let {
-                                            snackbarHostState.showSnackbar(it)
-                                        }
-
-                                        state.user?.let {
-                                            snackbarHostState.showSnackbar("¡Cuenta creada con éxito!")
-                                            navController.navigateUp()
-                                        }
-                                    }
-                                }
+                                authViewModel.register(registroDTO)
                             }
                         }
                     },
@@ -176,6 +187,25 @@ fun RegisterScreen(
                     }
                 }
 
+                // --- Observe Auth Events ---
+                val context = androidx.compose.ui.platform.LocalContext.current
+                LaunchedEffect(Unit) {
+                    authViewModel.authEvent.collect { event ->
+                        when (event) {
+                            is AuthViewModel.AuthEvent.RegisterSuccess -> {
+                                android.widget.Toast.makeText(context, "Cuenta creada exitosamente", android.widget.Toast.LENGTH_SHORT).show()
+                                navController.navigate("login") {
+                                    popUpTo("register") { inclusive = true }
+                                }
+                            }
+                            is AuthViewModel.AuthEvent.Error -> {
+                                snackbarHostState.showSnackbar(event.message)
+                            }
+                            else -> {}
+                        }
+                    }
+                }
+
                 // --- Enlace de retorno ---
                 TextButton(onClick = { navController.navigateUp() }) {
                     Text("¿Ya tienes cuenta? Inicia sesión")
@@ -188,14 +218,18 @@ fun RegisterScreen(
 // --- Validación de formulario ---
 private fun validateForm(
     nombre: String,
+    apellido: String,
     email: String,
     telefono: String,
+    fechaNacimiento: String,
     password: String,
     confirmarPassword: String
 ): Boolean {
     return nombre.isNotBlank() &&
+            apellido.isNotBlank() && // Validate apellido
             email.isNotBlank() &&
             telefono.isNotBlank() &&
+            fechaNacimiento.isNotBlank() &&
             password.isNotBlank() &&
             confirmarPassword.isNotBlank() &&
             password.length >= 4

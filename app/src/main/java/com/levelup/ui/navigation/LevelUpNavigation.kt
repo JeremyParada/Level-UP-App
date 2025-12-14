@@ -57,7 +57,8 @@ fun LevelUpNavigation() {
                                     saveState = true
                                 }
                                 launchSingleTop = true
-                                restoreState = true
+                                // Request: Profile tab should always go to ProfileScreen root
+                                restoreState = item.route != Screen.Profile.route
                             }
                         }
                     )
@@ -118,6 +119,10 @@ fun LevelUpNavigation() {
 
             composable(Screen.PersonalInfo.route) {
                 PersonalInfoScreen(navController)
+            }
+
+            composable(Screen.Addresses.route) {
+                AddressScreen(navController)
             }
         }
 

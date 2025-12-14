@@ -1,82 +1,118 @@
 package com.levelup.data.auth
 
 import com.levelup.data.model.User
-import java.util.UUID
+import com.levelup.data.remote.ApiService
+import com.levelup.data.remote.dto.LoginDTO
+import com.levelup.data.remote.dto.RegistroDTO
+import com.levelup.data.session.SessionManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Implementación simple en memoria con 3 usuarios precargados para pruebas.
- * NOTA: las contraseñas están en texto claro solo para pruebas locales.
- * En producción usar un backend y hashing seguro.
- */
 @Singleton
-class AuthRepositoryImpl @Inject constructor(): AuthRepository {
-
-    // mapa email -> Pair<User, password>
-    private val users = mutableMapOf<String, Pair<User, String>>().apply {
-        put("alice@test.com", Pair(User(id = "u1", nombre = "Alice", email = "alice@test.com", telefono = "099111111", direccion = "Calle A 1", avatarUrl = null), "password1"))
-        put("bob@test.com", Pair(User(id = "u2", nombre = "Bob", email = "bob@test.com", telefono = "099222222", direccion = "Calle B 2", avatarUrl = null), "password2"))
-        put("carla@test.com", Pair(User(id = "u3", nombre = "Carla", email = "carla@test.com", telefono = "099333333", direccion = "Calle C 3", avatarUrl = null), "password3"))
-    }
+class AuthRepositoryImpl @Inject constructor(
+    private val apiService: ApiService,
+    private val sessionManager: SessionManager // We use this to save token internally or just use it in ViewModel? 
+    // Actually, to make "getUserById" work with "me", we rely on token.
+    // Let's decide: Repository saves token on login success?
+    // Start with: Repository does NOT save token, it returns it? 
+    // But interface signature is `AuthResult`.
+    // Let's modify logic: Repository saves token on success login.
+) : AuthRepository {
 
     override suspend fun login(email: String, password: String): AuthResult {
-        val entry = users[email.lowercase()]
-        return if (entry != null && entry.second == password) {
-            AuthResult.Success(entry.first)
-        } else {
-            AuthResult.Error("Correo o contraseña incorrectos")
-        }
-    }
-
-    override suspend fun register(user: User, password: String): AuthResult {
-        val emailKey = user.email.lowercase()
-        if (users.containsKey(emailKey)) {
-            return AuthResult.Error("Ya existe una cuenta con ese correo")
-        }
-        val id = UUID.randomUUID().toString()
-        val newUser = user.copy(id = id)
-        users[emailKey] = Pair(newUser, password)
-        return AuthResult.Success(newUser)
-    }
-
-    override suspend fun getUserById(id: String): User? {
-        return users.values.map { it.first }.firstOrNull { it.id == id }
-    }
-
-    override fun getAllUsers(): List<User> {
-        return users.values.map { it.first }
-    }
-
-    override suspend fun updateUser(user: User): AuthResult {
-        val existingEntry = users.values.firstOrNull { it.first.id == user.id }
-        return if (existingEntry != null) {
-            val emailKey = existingEntry.first.email.lowercase()
-            val password = users[emailKey]?.second ?: "password"
-            users[emailKey] = Pair(user, password)
-            AuthResult.Success(user)
-        } else {
-            AuthResult.Error("Usuario no encontrado")
-        }
-    }
-
-    override suspend fun deleteUserData(userId: String): AuthResult {
-        val emailKey = users.entries.find { it.value.first.id == userId }?.key
-        return if (emailKey != null) {
-            val user = users[emailKey]?.first
-            val password = users[emailKey]?.second
-            // Eliminar teléfono y dirección (mantener cuenta y correo)
-            if (user != null) {
-                val updatedUser = user.copy(telefono = null, direccion = null)
-                users[emailKey] = Pair(updatedUser, password ?: "")
-                AuthResult.Success(updatedUser)
-            } else {
-                AuthResult.Error("Usuario no encontrado")
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.login(LoginDTO(email, password))
+                if (response.isSuccessful && response.body() != null) {
+                    val jwtDto = response.body()!!
+                    // Save session
+                    sessionManager.saveSession(jwtDto.id, jwtDto.token)
+                    val user = User(
+                        idUsuario = jwtDto.id,
+                        nombre = jwtDto.username,
+                        email = jwtDto.email
+                    )
+                    AuthResult.Success(user)
+                } else {
+                    AuthResult.Error("Login fallido: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                AuthResult.Error(e.message ?: "Error desconocido")
             }
-        } else {
-            AuthResult.Error("Usuario no encontrado")
         }
     }
 
+    override suspend fun register(registro: RegistroDTO): AuthResult {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.register(registro)
+                if (response.isSuccessful) {
+                    // Registration success, but we don't get user/token.
+                    // We return Success but with a dummy user or just indicate success?
+                    // AuthResult.Success requires a User.
+                    // We can return a dummy user with ID 0 and empty fields just to signal success?
+                    // Or we can try to auto-login? No we don't have password if we hashed it (we have it here though).
+                    // Let's return a dummy user or change AuthResult to sealed interface with different Success types.
+                    // For now, simple hack: Dummy user.
+                    val dummyUser = User(idUsuario = 0, nombre = registro.nombre, email = registro.email)
+                    AuthResult.Success(dummyUser)
+                    AuthResult.Success(dummyUser)
+                } else {
+                    val msg = response.errorBody()?.string() ?: "Error en registro"
+                    AuthResult.Error(msg)
+                }
+            } catch (e: Exception) {
+                AuthResult.Error(e.message ?: "Error desconocido")
+            }
+        }
+    }
 
+    override suspend fun getUserById(id: Long): User? {
+        return withContext(Dispatchers.IO) {
+            try {
+                // We use "me" endpoint which is safer, but it takes ID.
+                val response = apiService.getUserProfile(id)
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    override suspend fun updateUser(id: Long, nombre: String, telefono: String?): AuthResult {
+        return withContext(Dispatchers.IO) {
+            // Backend doesn't seem to have a specific endpoint for updating JUST user info in the standard way?
+            // "api/v1/usuarios" -> getPerfil.
+            // Address is handled separately.
+            // Is there a user update endpoint?
+            // In exploring files, I only saw "UsuarioController" with "getPerfil".
+            // "AuthController" has login/register.
+            // I did NOT see an update endpoint in UsuarioController.
+            // I need to check `UsuarioController.java` again.
+            // If it's missing, I can't implement it.
+            // Wait, looking at file `UsuarioController.java` (step 22), it ONLY has `getPerfil`.
+            // So we CANNOT update user name/phone currently.
+            // User requested: "que el usuario... pueda agregar direcciones...".
+            // User did NOT explicitly ask to update Name/Phone in "Level-UP-App" request, but "PersonalInfoScreen" has it.
+            // "PersonalInfoScreen rules: agregar direcciones, modificar las existentes".
+            // It says "Que en la pantalla PersonalInfoScreen.kt el usuario con la sesión iniciada pueda agregar direcciones...".
+            // It doesn't explicitly force me to fix user Update name/phone.
+            // But the screen has it.
+            // I will return Error("Not implemented in backend") for now or just fake it.
+            // Since "read-only" on backend, I can't add the endpoint.
+            // I will return AuthResult.Success w/o changes or Error.
+            AuthResult.Error("Actualización de perfil no disponible en Backend")
+        }
+    }
+
+    override suspend fun deleteUserData(userId: Long): AuthResult {
+        // Same here, no delete endpoint seen in UsuarioController.
+        return AuthResult.Error("Eliminación de cuenta no disponible en Backend")
+    }
 }

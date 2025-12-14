@@ -10,9 +10,10 @@ sealed class AuthResult {
 
 interface AuthRepository {
     suspend fun login(email: String, password: String): AuthResult
-    suspend fun register(user: User, password: String): AuthResult
-    suspend fun getUserById(id: String): User?
-    fun getAllUsers(): List<User>
-    suspend fun updateUser(user: User): AuthResult
-    suspend fun deleteUserData(userId: String): AuthResult
+    suspend fun register(registro: com.levelup.data.remote.dto.RegistroDTO): AuthResult
+    suspend fun getUserById(id: Long): User?
+    // getAllUsers removed
+    suspend fun updateUser(id: Long, nombre: String, telefono: String?): AuthResult
+    // deleteUserData logic might still be relevant
+    suspend fun deleteUserData(userId: Long): AuthResult
 }

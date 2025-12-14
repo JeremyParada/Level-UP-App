@@ -17,21 +17,28 @@ class SessionManager @Inject constructor(private val context: Context) {
 
     companion object {
         val KEY_USER_ID = stringPreferencesKey("key_user_id")
+        val KEY_AUTH_TOKEN = stringPreferencesKey("key_auth_token")
     }
 
-    suspend fun saveUserId(userId: String) {
+    suspend fun saveSession(userId: Long, token: String) {
         context.dataStore.edit { prefs ->
-            prefs[KEY_USER_ID] = userId
+            prefs[KEY_USER_ID] = userId.toString()
+            prefs[KEY_AUTH_TOKEN] = token
         }
     }
 
     suspend fun clearSession() {
         context.dataStore.edit { prefs ->
             prefs.remove(KEY_USER_ID)
+            prefs.remove(KEY_AUTH_TOKEN)
         }
     }
 
-    val userIdFlow: Flow<String?> = context.dataStore.data.map { prefs ->
-        prefs[KEY_USER_ID]
+    val userIdFlow: Flow<Long?> = context.dataStore.data.map { prefs ->
+        prefs[KEY_USER_ID]?.toLongOrNull()
+    }
+
+    val authTokenFlow: Flow<String?> = context.dataStore.data.map { prefs ->
+        prefs[KEY_AUTH_TOKEN]
     }
 }

@@ -114,15 +114,24 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Mostrar usuarios de prueba para facilitar tests (opcional)
-            val testUsers = viewModel.getAllTestUsers()
-            if (testUsers.isNotEmpty()) {
-                Text("Usuarios de prueba:", style = MaterialTheme.typography.titleSmall)
-                testUsers.forEach { u ->
-                    if (u.id in setOf("u1", "u2", "u3")) {
-                        Text("${u.nombre} — ${u.email}", style = MaterialTheme.typography.bodySmall)
+            // Test users usage removed
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+
+        // --- Observe Auth Events ---
+        val context = androidx.compose.ui.platform.LocalContext.current
+        LaunchedEffect(Unit) {
+            viewModel.authEvent.collect { event ->
+                when (event) {
+                    is AuthViewModel.AuthEvent.LoginSuccess -> {
+                        android.widget.Toast.makeText(context, "Sesión iniciada correctamente", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    is AuthViewModel.AuthEvent.Error -> {
+                        android.widget.Toast.makeText(context, event.message, android.widget.Toast.LENGTH_LONG).show()
+                    }
+                    else -> {}
                 }
             }
         }
     }
-}}
+}

@@ -47,7 +47,13 @@ fun ProfileScreen(
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
-            if (currentUser != null) {
+            val isCheckingSession by viewModel.isCheckingSession.collectAsState()
+
+            if (isCheckingSession) {
+                Box(modifier = Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else if (currentUser != null) {
                 ProfileHeader(currentUser!!.nombre, currentUser!!.email)
                 Spacer(modifier = Modifier.height(24.dp))
                 ProfileMenuSection(navController)
@@ -162,7 +168,7 @@ fun ProfileMenuSection(navController: NavController) {
         ProfileMenuItem(
             icon = Icons.Default.LocationOn,
             title = "Direcciones",
-            onClick = { /* TODO */ }
+            onClick = { navController.navigate(Screen.Addresses.route) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))

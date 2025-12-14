@@ -4,9 +4,11 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.levelup.data.remote.ApiService
+import com.levelup.data.remote.AuthInterceptor
 import com.levelup.data.repository.CartRepository
 import com.levelup.data.repository.ProductRepository
 import com.levelup.data.repository.ProductRepositoryImpl
+import com.levelup.data.repository.AddressRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +27,7 @@ import com.levelup.data.session.SessionManager
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule { // <-- cambiar a objeto que expone @Provides
+object AppModule {
 
     @Provides
     @Singleton
@@ -33,10 +35,23 @@ object AppModule { // <-- cambiar a objeto que expone @Provides
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
+        return SessionManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(sessionManager: SessionManager): AuthInterceptor {
+        return AuthInterceptor(sessionManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         return OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addInterceptor(authInterceptor) // Add Auth Interceptor
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -47,7 +62,7 @@ object AppModule { // <-- cambiar a objeto que expone @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://level-up-web.duckdns.org/")
+            .baseUrl("http://34.229.165.5/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -63,7 +78,6 @@ object AppModule { // <-- cambiar a objeto que expone @Provides
     fun provideProductRepository(
         apiService: ApiService
     ): ProductRepository {
-        // devolvemos la implementación concreta que ahora debe implementar ProductRepository
         return ProductRepositoryImpl(apiService)
     }
 
@@ -73,13 +87,16 @@ object AppModule { // <-- cambiar a objeto que expone @Provides
 
     @Provides
     @Singleton
-    fun provideAuthRepository(): AuthRepository {
-        return AuthRepositoryImpl()
+    fun provideAuthRepository(
+        apiService: ApiService,
+        sessionManager: SessionManager
+    ): AuthRepository {
+        return AuthRepositoryImpl(apiService, sessionManager)
     }
 
     @Provides
     @Singleton
-    fun provideSessionManager(@ApplicationContext context: Context): SessionManager {
-        return SessionManager(context)
+    fun provideAddressRepository(apiService: ApiService): AddressRepository {
+        return AddressRepository(apiService)
     }
 }
