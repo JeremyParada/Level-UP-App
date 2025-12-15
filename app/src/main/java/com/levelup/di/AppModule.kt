@@ -1,4 +1,8 @@
+
 package com.levelup.di
+
+import com.levelup.data.repository.OrderRepository
+import com.levelup.data.repository.OrderRepositoryImpl
 
 import android.content.Context
 import com.google.gson.Gson
@@ -28,6 +32,12 @@ import com.levelup.data.session.SessionManager
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(apiService: ApiService): OrderRepository {
+        return OrderRepositoryImpl(apiService)
+    }
 
     @Provides
     @Singleton
@@ -62,7 +72,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://100.26.145.96/")
+            .baseUrl("http://98.93.21.173/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

@@ -26,6 +26,8 @@ import hilt_aggregated_deps._com_levelup_viewmodel_AddressViewModel_HiltModules_
 import hilt_aggregated_deps._com_levelup_viewmodel_AddressViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_levelup_viewmodel_CartViewModel_HiltModules_BindsModule;
 import hilt_aggregated_deps._com_levelup_viewmodel_CartViewModel_HiltModules_KeyModule;
+import hilt_aggregated_deps._com_levelup_viewmodel_OrderViewModel_HiltModules_BindsModule;
+import hilt_aggregated_deps._com_levelup_viewmodel_OrderViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_levelup_viewmodel_ProductViewModel_HiltModules_BindsModule;
 import hilt_aggregated_deps._com_levelup_viewmodel_ProductViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._dagger_hilt_android_flags_FragmentGetContextFix_FragmentGetContextFixEntryPoint;
@@ -77,6 +79,8 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
         _com_levelup_viewmodel_AddressViewModel_HiltModules_KeyModule.class,
         _com_levelup_viewmodel_CartViewModel_HiltModules_BindsModule.class,
         _com_levelup_viewmodel_CartViewModel_HiltModules_KeyModule.class,
+        _com_levelup_viewmodel_OrderViewModel_HiltModules_BindsModule.class,
+        _com_levelup_viewmodel_OrderViewModel_HiltModules_KeyModule.class,
         _com_levelup_viewmodel_ProductViewModel_HiltModules_BindsModule.class,
         _com_levelup_viewmodel_ProductViewModel_HiltModules_KeyModule.class,
         _dagger_hilt_android_flags_FragmentGetContextFix_FragmentGetContextFixEntryPoint.class,

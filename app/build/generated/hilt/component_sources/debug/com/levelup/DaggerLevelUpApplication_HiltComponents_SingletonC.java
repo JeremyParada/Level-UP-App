@@ -12,6 +12,7 @@ import com.levelup.data.remote.ApiService;
 import com.levelup.data.remote.AuthInterceptor;
 import com.levelup.data.repository.AddressRepository;
 import com.levelup.data.repository.CartRepository;
+import com.levelup.data.repository.OrderRepository;
 import com.levelup.data.repository.ProductRepository;
 import com.levelup.data.session.SessionManager;
 import com.levelup.di.AppModule_ProvideAddressRepositoryFactory;
@@ -21,6 +22,7 @@ import com.levelup.di.AppModule_ProvideAuthRepositoryFactory;
 import com.levelup.di.AppModule_ProvideCartRepositoryFactory;
 import com.levelup.di.AppModule_ProvideGsonFactory;
 import com.levelup.di.AppModule_ProvideOkHttpClientFactory;
+import com.levelup.di.AppModule_ProvideOrderRepositoryFactory;
 import com.levelup.di.AppModule_ProvideProductRepositoryFactory;
 import com.levelup.di.AppModule_ProvideRetrofitFactory;
 import com.levelup.di.AppModule_ProvideSessionManagerFactory;
@@ -30,6 +32,8 @@ import com.levelup.viewmodel.AddressViewModel;
 import com.levelup.viewmodel.AddressViewModel_HiltModules;
 import com.levelup.viewmodel.CartViewModel;
 import com.levelup.viewmodel.CartViewModel_HiltModules;
+import com.levelup.viewmodel.OrderViewModel;
+import com.levelup.viewmodel.OrderViewModel_HiltModules;
 import com.levelup.viewmodel.ProductViewModel;
 import com.levelup.viewmodel.ProductViewModel_HiltModules;
 import dagger.hilt.android.ActivityRetainedLifecycle;
@@ -394,7 +398,7 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(4).put(LazyClassKeyProvider.com_levelup_viewmodel_AddressViewModel, AddressViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_ui_auth_AuthViewModel, AuthViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_viewmodel_CartViewModel, CartViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_viewmodel_ProductViewModel, ProductViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(5).put(LazyClassKeyProvider.com_levelup_viewmodel_AddressViewModel, AddressViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_ui_auth_AuthViewModel, AuthViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_viewmodel_CartViewModel, CartViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_viewmodel_OrderViewModel, OrderViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_levelup_viewmodel_ProductViewModel, ProductViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -414,22 +418,27 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
+      static String com_levelup_viewmodel_OrderViewModel = "com.levelup.viewmodel.OrderViewModel";
+
+      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
 
       static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
 
-      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
+      static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
 
       static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
 
       @KeepFieldType
-      CartViewModel com_levelup_viewmodel_CartViewModel2;
+      OrderViewModel com_levelup_viewmodel_OrderViewModel2;
+
+      @KeepFieldType
+      AddressViewModel com_levelup_viewmodel_AddressViewModel2;
 
       @KeepFieldType
       ProductViewModel com_levelup_viewmodel_ProductViewModel2;
 
       @KeepFieldType
-      AddressViewModel com_levelup_viewmodel_AddressViewModel2;
+      CartViewModel com_levelup_viewmodel_CartViewModel2;
 
       @KeepFieldType
       AuthViewModel com_levelup_ui_auth_AuthViewModel2;
@@ -449,6 +458,8 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     private Provider<CartViewModel> cartViewModelProvider;
 
+    private Provider<OrderViewModel> orderViewModelProvider;
+
     private Provider<ProductViewModel> productViewModelProvider;
 
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
@@ -467,12 +478,13 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
       this.addressViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
       this.authViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
       this.cartViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
-      this.productViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.orderViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.productViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(4).put(LazyClassKeyProvider.com_levelup_viewmodel_AddressViewModel, ((Provider) addressViewModelProvider)).put(LazyClassKeyProvider.com_levelup_ui_auth_AuthViewModel, ((Provider) authViewModelProvider)).put(LazyClassKeyProvider.com_levelup_viewmodel_CartViewModel, ((Provider) cartViewModelProvider)).put(LazyClassKeyProvider.com_levelup_viewmodel_ProductViewModel, ((Provider) productViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(5).put(LazyClassKeyProvider.com_levelup_viewmodel_AddressViewModel, ((Provider) addressViewModelProvider)).put(LazyClassKeyProvider.com_levelup_ui_auth_AuthViewModel, ((Provider) authViewModelProvider)).put(LazyClassKeyProvider.com_levelup_viewmodel_CartViewModel, ((Provider) cartViewModelProvider)).put(LazyClassKeyProvider.com_levelup_viewmodel_OrderViewModel, ((Provider) orderViewModelProvider)).put(LazyClassKeyProvider.com_levelup_viewmodel_ProductViewModel, ((Provider) productViewModelProvider)).build());
     }
 
     @Override
@@ -482,25 +494,30 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
-
       static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
+
+      static String com_levelup_viewmodel_OrderViewModel = "com.levelup.viewmodel.OrderViewModel";
 
       static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
 
       static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
 
-      @KeepFieldType
-      ProductViewModel com_levelup_viewmodel_ProductViewModel2;
+      static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
 
       @KeepFieldType
       AddressViewModel com_levelup_viewmodel_AddressViewModel2;
+
+      @KeepFieldType
+      OrderViewModel com_levelup_viewmodel_OrderViewModel2;
 
       @KeepFieldType
       AuthViewModel com_levelup_ui_auth_AuthViewModel2;
 
       @KeepFieldType
       CartViewModel com_levelup_viewmodel_CartViewModel2;
+
+      @KeepFieldType
+      ProductViewModel com_levelup_viewmodel_ProductViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -533,7 +550,10 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
           case 2: // com.levelup.viewmodel.CartViewModel 
           return (T) new CartViewModel(singletonCImpl.provideCartRepositoryProvider.get());
 
-          case 3: // com.levelup.viewmodel.ProductViewModel 
+          case 3: // com.levelup.viewmodel.OrderViewModel 
+          return (T) new OrderViewModel(singletonCImpl.provideOrderRepositoryProvider.get());
+
+          case 4: // com.levelup.viewmodel.ProductViewModel 
           return (T) new ProductViewModel(singletonCImpl.provideProductRepositoryProvider.get());
 
           default: throw new AssertionError(id);
@@ -634,6 +654,8 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     private Provider<CartRepository> provideCartRepositoryProvider;
 
+    private Provider<OrderRepository> provideOrderRepositoryProvider;
+
     private Provider<ProductRepository> provideProductRepositoryProvider;
 
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
@@ -653,11 +675,12 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
       this.provideAddressRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AddressRepository>(singletonCImpl, 0));
       this.provideAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AuthRepository>(singletonCImpl, 7));
       this.provideCartRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CartRepository>(singletonCImpl, 8));
-      this.provideProductRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<ProductRepository>(singletonCImpl, 9));
+      this.provideOrderRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<OrderRepository>(singletonCImpl, 9));
+      this.provideProductRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<ProductRepository>(singletonCImpl, 10));
     }
 
     @Override
-    public void injectLevelUpApplication(LevelUpApplication levelUpApplication) {
+    public void injectLevelUpApplication(LevelUpApplication arg0) {
     }
 
     @Override
@@ -716,7 +739,10 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
           case 8: // com.levelup.data.repository.CartRepository 
           return (T) AppModule_ProvideCartRepositoryFactory.provideCartRepository();
 
-          case 9: // com.levelup.data.repository.ProductRepository 
+          case 9: // com.levelup.data.repository.OrderRepository 
+          return (T) AppModule_ProvideOrderRepositoryFactory.provideOrderRepository(singletonCImpl.provideApiServiceProvider.get());
+
+          case 10: // com.levelup.data.repository.ProductRepository 
           return (T) AppModule_ProvideProductRepositoryFactory.provideProductRepository(singletonCImpl.provideApiServiceProvider.get());
 
           default: throw new AssertionError(id);

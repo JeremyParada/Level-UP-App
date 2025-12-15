@@ -1,15 +1,15 @@
 package com.levelup.data.model
 
-import com.google.gson.annotations.SerializedName
-
 data class Direccion(
-    @SerializedName("idDireccion")
-    val id: Long? = null,
+    val idDireccion: Long? = null,
+    val idUsuario: Long? = null,
+    val tipoDireccion: String = "CASA", // CASA, TRABAJO, OTRO
     val calle: String,
     val numero: String,
     val comuna: String,
     val ciudad: String,
     val region: String,
     val codigoPostal: String,
-    val idUsuario: Long? = null
+    val esPrincipal: Int = 0 // 0 = no, 1 = sí
 )
+

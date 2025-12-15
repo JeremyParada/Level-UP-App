@@ -70,4 +70,11 @@ interface ApiService {
 
     @GET("api/v1/productos/categoria/{idCategoria}")
     suspend fun getProductsByCategory(@Path("idCategoria") idCategoria: String): Response<List<Product>>
+
+    // --- PEDIDOS ---
+    @POST("api/v1/pedidos")
+    suspend fun createOrder(@Body order: com.levelup.data.model.OrderRequest): Response<Map<String, Any>>
+
+    @GET("api/v1/pedidos/usuario/{id}")
+    suspend fun getOrdersByUser(@Path("id") userId: Long): Response<List<com.levelup.data.model.Order>>
 }

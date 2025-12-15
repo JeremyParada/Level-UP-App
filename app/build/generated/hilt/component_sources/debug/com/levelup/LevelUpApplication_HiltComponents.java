@@ -4,6 +4,7 @@ import com.levelup.di.AppModule;
 import com.levelup.ui.auth.AuthViewModel_HiltModules;
 import com.levelup.viewmodel.AddressViewModel_HiltModules;
 import com.levelup.viewmodel.CartViewModel_HiltModules;
+import com.levelup.viewmodel.OrderViewModel_HiltModules;
 import com.levelup.viewmodel.ProductViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
@@ -163,6 +164,7 @@ public final class LevelUpApplication_HiltComponents {
           HiltWrapper_SavedStateHandleModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class,
+          OrderViewModel_HiltModules.KeyModule.class,
           ProductViewModel_HiltModules.KeyModule.class
       }
   )
@@ -203,6 +205,7 @@ public final class LevelUpApplication_HiltComponents {
           AuthViewModel_HiltModules.BindsModule.class,
           CartViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
+          OrderViewModel_HiltModules.BindsModule.class,
           ProductViewModel_HiltModules.BindsModule.class
       }
   )

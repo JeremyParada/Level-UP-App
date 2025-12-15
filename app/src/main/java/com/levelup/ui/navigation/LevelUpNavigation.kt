@@ -1,5 +1,10 @@
 package com.levelup.ui.navigation
 
+import com.levelup.data.model.CartItem
+import com.levelup.data.model.Direccion
+import com.levelup.data.model.Order
+import com.levelup.ui.navigation.Screen
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -93,8 +98,40 @@ fun LevelUpNavigation() {
                 )
             }
 
+
+
             composable(Screen.Cart.route) {
                 CartScreen(navController)
+            }
+
+            composable(Screen.Checkout.route) {
+                CheckoutScreen(navController)
+            }
+
+            composable(Screen.OrderHistory.route) {
+                // userId debe ser obtenido del contexto real de usuario
+                OrderHistoryScreen(navController = navController, userId = 0L)
+            }
+
+            composable(
+                route = Screen.OrderDetail.route,
+                arguments = listOf(navArgument("orderId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                // Aquí deberías obtener el pedido real por ID
+                val orderId = backStackEntry.arguments?.getLong("orderId") ?: 0L
+                // Placeholder: order vacío
+                OrderDetailScreen(order = Order(
+                    idPedido = orderId,
+                    usuario = null,
+                    direccionEnvio = null,
+                    fechaPedido = null,
+                    totalBruto = 0.0,
+                    descuentoAplicado = 0.0,
+                    totalNeto = 0.0,
+                    estadoPedido = "",
+                    metodoPago = "",
+                    detalles = emptyList()
+                ))
             }
 
             composable(Screen.Profile.route) {

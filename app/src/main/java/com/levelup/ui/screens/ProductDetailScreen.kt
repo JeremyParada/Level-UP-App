@@ -173,7 +173,7 @@ fun ProductDetailContent(
             .verticalScroll(rememberScrollState())
     ) {
         // Imagen del producto
-        val imageUrl = if (product.imagen.startsWith("http")) product.imagen else "http://100.26.145.96" + product.imagen
+        val imageUrl = if (product.imagen.startsWith("http")) product.imagen else "http://98.93.21.173" + product.imagen
         AsyncImage(
             model = imageUrl,
             contentDescription = product.nombreProducto,

@@ -4,29 +4,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.levelup.data.auth.AuthRepository
 import com.levelup.data.auth.AuthResult
-import com.levelup.data.model.User
 import com.levelup.data.model.Direccion
+import com.levelup.data.model.User
 import com.levelup.data.remote.dto.RegistroDTO
 import com.levelup.data.repository.AddressRepository
 import com.levelup.data.session.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class AuthUiState(
-    val isLoading: Boolean = false,
-    val user: User? = null,
-    val error: String? = null
+        val isLoading: Boolean = false,
+        val user: User? = null,
+        val error: String? = null
 )
 
 @HiltViewModel
 @OptIn(ExperimentalCoroutinesApi::class)
-class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val sessionManager: SessionManager,
-    private val addressRepository: AddressRepository
+class AuthViewModel
+@Inject
+constructor(
+        private val authRepository: AuthRepository,
+        private val sessionManager: SessionManager,
+        private val addressRepository: AddressRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
@@ -56,34 +58,32 @@ class AuthViewModel @Inject constructor(
     // Current User Flow
     // Fixed: Combine userId and authToken to ensure both are present before fetching user.
     // This prevents the 401 error where userId is ready but token is not yet in the flow.
-    val currentUser: StateFlow<User?> = combine(
-        sessionManager.userIdFlow,
-        sessionManager.authTokenFlow
-    ) { userId, token ->
-        if (userId != null && !token.isNullOrEmpty()) {
-            userId
-        } else {
-            null
-        }
-    }
-    .onEach { 
-        // Once the flow emits (even null), we have checked the session source
-        // We might want to wait for the repo fetch too?
-        // Actually, onEach runs before mapLatest.
-        // Let's rely on the collection to update loading.
-    }
-    .distinctUntilChanged()
-    .mapLatest { id ->
-        if (id == null) {
-            _isCheckingSession.value = false // No user, check done
-            null
-        } else {
-            val user = authRepository.getUserById(id)
-            _isCheckingSession.value = false // User fetched (or null), check done
-            user
-        }
-    }
-    .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    val currentUser: StateFlow<User?> =
+            combine(sessionManager.userIdFlow, sessionManager.authTokenFlow) { userId, token ->
+                        if (userId != null && !token.isNullOrEmpty()) {
+                            userId
+                        } else {
+                            null
+                        }
+                    }
+                    .onEach {
+                        // Once the flow emits (even null), we have checked the session source
+                        // We might want to wait for the repo fetch too?
+                        // Actually, onEach runs before mapLatest.
+                        // Let's rely on the collection to update loading.
+                    }
+                    .distinctUntilChanged()
+                    .mapLatest { id ->
+                        if (id == null) {
+                            _isCheckingSession.value = false // No user, check done
+                            null
+                        } else {
+                            val user = authRepository.getUserById(id)
+                            _isCheckingSession.value = false // User fetched (or null), check done
+                            user
+                        }
+                    }
+                    .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     // Load addresses when user changes
     init {
@@ -92,7 +92,7 @@ class AuthViewModel @Inject constructor(
                 if (user != null) {
                     loadAddresses(user.idUsuario)
                     // Sync UI state user with fetched user
-                    _uiState.update { it.copy(user = user) } 
+                    _uiState.update { it.copy(user = user) }
                 } else {
                     _addresses.value = emptyList()
                     _uiState.update { it.copy(user = null) }
@@ -155,14 +155,15 @@ class AuthViewModel @Inject constructor(
     fun addAddress(direccion: Direccion) {
         val user = currentUser.value ?: return
         viewModelScope.launch {
-            val success = addressRepository.createAddress(direccion.copy(idUsuario = user.idUsuario))
+            val success =
+                    addressRepository.createAddress(direccion.copy(idUsuario = user.idUsuario))
             if (success) loadAddresses(user.idUsuario)
         }
     }
 
     fun updateAddress(direccion: Direccion) {
         val user = currentUser.value ?: return
-        val id = direccion.id ?: return
+        val id = direccion.idDireccion ?: return
         viewModelScope.launch {
             val success = addressRepository.updateAddress(id, direccion)
             if (success) loadAddresses(user.idUsuario)
@@ -184,7 +185,7 @@ class AuthViewModel @Inject constructor(
             authRepository.updateUser(userId, nombre, telefono)
         }
     }
-    
+
     fun deleteUserInfo(userId: Long) {
         viewModelScope.launch {
             authRepository.deleteUserData(userId)
