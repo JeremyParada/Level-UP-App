@@ -33,6 +33,35 @@ fun AddressScreen(
     val addresses by viewModel.addresses.collectAsState()
     val context = LocalContext.current
 
+    AddressContent(
+        currentUser = currentUser,
+        addresses = addresses,
+        onBackClick = { navController.popBackStack() },
+        onAddAddress = { address ->
+            viewModel.addAddress(address)
+            Toast.makeText(context, "Dirección agregada", Toast.LENGTH_SHORT).show()
+        },
+        onUpdateAddress = { address ->
+            viewModel.updateAddress(address)
+            Toast.makeText(context, "Dirección actualizada", Toast.LENGTH_SHORT).show()
+        },
+        onDeleteAddress = { addressId ->
+            viewModel.deleteAddress(addressId)
+            Toast.makeText(context, "Dirección eliminada", Toast.LENGTH_SHORT).show()
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddressContent(
+    currentUser: com.levelup.data.model.User?,
+    addresses: List<Direccion>,
+    onBackClick: () -> Unit,
+    onAddAddress: (Direccion) -> Unit,
+    onUpdateAddress: (Direccion) -> Unit,
+    onDeleteAddress: (Long) -> Unit
+) {
     // State for Dialog
     var showAddressDialog by remember { mutableStateOf(false) }
     var addressToEdit by remember { mutableStateOf<Direccion?>(null) } // null = new, not null = edit
@@ -42,7 +71,7 @@ fun AddressScreen(
             TopAppBar(
                 title = { Text("Mis Direcciones", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = onBackClick) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 },
@@ -92,7 +121,7 @@ fun AddressScreen(
                                     style = MaterialTheme.typography.titleMedium
                                 )
                                 Text(
-                                    text = currentUser!!.nombre,
+                                    text = currentUser.nombre,
                                     style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -104,7 +133,7 @@ fun AddressScreen(
                                     style = MaterialTheme.typography.titleMedium
                                 )
                                 Text(
-                                    text = currentUser!!.email,
+                                    text = currentUser.email,
                                     style = MaterialTheme.typography.bodyLarge
                                 )
                             }
@@ -135,8 +164,7 @@ fun AddressScreen(
                                     showAddressDialog = true
                                 },
                                 onDelete = {
-                                    viewModel.deleteAddress(address.id!!)
-                                    Toast.makeText(context, "Dirección eliminada", Toast.LENGTH_SHORT).show()
+                                    onDeleteAddress(address.id!!)
                                 }
                             )
                         }
@@ -152,11 +180,9 @@ fun AddressScreen(
             onDismiss = { showAddressDialog = false },
             onSave = { newAddress ->
                 if (addressToEdit == null) {
-                    viewModel.addAddress(newAddress)
-                    Toast.makeText(context, "Dirección agregada", Toast.LENGTH_SHORT).show()
+                    onAddAddress(newAddress)
                 } else {
-                    viewModel.updateAddress(newAddress)
-                    Toast.makeText(context, "Dirección actualizada", Toast.LENGTH_SHORT).show()
+                    onUpdateAddress(newAddress)
                 }
                 showAddressDialog = false
             }

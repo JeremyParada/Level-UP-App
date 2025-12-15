@@ -68,12 +68,8 @@ class ProductsGridTest {
         composeTestRule.onNode(hasText("39", substring = true)).assertExists()
 
         // Validar que el número de nodos que contienen los nombres coincide con la lista
-        composeTestRule
-            .onAllNodes(hasAnySibling(hasText("Nintendo Switch")) or hasAnySibling(hasText("Mouse Gamer Logitech")))
-            .apply {
-                // al menos los dos nombres deben existir; usamos assertCountEquals sobre los nombres directos:
-                composeTestRule.onAllNodes(hasText("Nintendo Switch") or hasText("Mouse Gamer Logitech"))
-                    .assertCountEquals(2)
-            }
+        // Validar que el número de nodos que contienen los nombres coincide con la lista (2 items)
+        composeTestRule.onAllNodes(hasText("Nintendo Switch") or hasText("Mouse Gamer Logitech"))
+            .assertCountEquals(2)
     }
 }
