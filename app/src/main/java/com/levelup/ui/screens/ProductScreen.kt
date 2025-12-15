@@ -1,6 +1,7 @@
 package com.levelup.ui.screens
 
 import androidx.compose.foundation.background
+import coil.compose.AsyncImage
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -219,6 +220,7 @@ fun ProductsGrid(products: List<Product>, navController: NavController) {
 
 @Composable
 fun ProductGridItem(product: Product, onClick: () -> Unit) {
+    val imageUrl = if (product.imagen.startsWith("http")) product.imagen else "http://100.26.145.96" + product.imagen
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,21 +230,13 @@ fun ProductGridItem(product: Product, onClick: () -> Unit) {
     ) {
         Column {
             // Imagen del producto
-            Box(
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = product.nombreProducto,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .background(LevelUpPrimary.copy(alpha = 0.1f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = product.nombreProducto.take(2).uppercase(),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = LevelUpPrimary,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
+            )
             Column(modifier = Modifier.padding(12.dp)) {
                 // Categoría
                 Text(
@@ -251,7 +245,6 @@ fun ProductGridItem(product: Product, onClick: () -> Unit) {
                     color = LevelUpSecondary,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
-
                 // Nombre del producto
                 Text(
                     text = product.nombreProducto,

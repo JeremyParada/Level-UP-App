@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import coil.compose.AsyncImage
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -172,20 +173,14 @@ fun ProductDetailContent(
             .verticalScroll(rememberScrollState())
     ) {
         // Imagen del producto
-        Box(
+        val imageUrl = if (product.imagen.startsWith("http")) product.imagen else "http://100.26.145.96" + product.imagen
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = product.nombreProducto,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
-                .background(LevelUpPrimary.copy(alpha = 0.1f)),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = product.nombreProducto.take(3).uppercase(),
-                style = MaterialTheme.typography.displayLarge,
-                color = LevelUpPrimary,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        )
 
         Column(
             modifier = Modifier

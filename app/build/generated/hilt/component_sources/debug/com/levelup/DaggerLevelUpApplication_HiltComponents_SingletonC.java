@@ -9,11 +9,14 @@ import androidx.lifecycle.ViewModel;
 import com.google.gson.Gson;
 import com.levelup.data.auth.AuthRepository;
 import com.levelup.data.remote.ApiService;
+import com.levelup.data.remote.AuthInterceptor;
 import com.levelup.data.repository.AddressRepository;
 import com.levelup.data.repository.CartRepository;
 import com.levelup.data.repository.ProductRepository;
 import com.levelup.data.session.SessionManager;
+import com.levelup.di.AppModule_ProvideAddressRepositoryFactory;
 import com.levelup.di.AppModule_ProvideApiServiceFactory;
+import com.levelup.di.AppModule_ProvideAuthInterceptorFactory;
 import com.levelup.di.AppModule_ProvideAuthRepositoryFactory;
 import com.levelup.di.AppModule_ProvideCartRepositoryFactory;
 import com.levelup.di.AppModule_ProvideGsonFactory;
@@ -411,25 +414,25 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
-
-      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
-
       static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
 
       static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
 
-      @KeepFieldType
-      AuthViewModel com_levelup_ui_auth_AuthViewModel2;
+      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
 
-      @KeepFieldType
-      AddressViewModel com_levelup_viewmodel_AddressViewModel2;
+      static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
 
       @KeepFieldType
       CartViewModel com_levelup_viewmodel_CartViewModel2;
 
       @KeepFieldType
       ProductViewModel com_levelup_viewmodel_ProductViewModel2;
+
+      @KeepFieldType
+      AddressViewModel com_levelup_viewmodel_AddressViewModel2;
+
+      @KeepFieldType
+      AuthViewModel com_levelup_ui_auth_AuthViewModel2;
     }
   }
 
@@ -522,10 +525,10 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.levelup.viewmodel.AddressViewModel 
-          return (T) new AddressViewModel(singletonCImpl.addressRepositoryProvider.get());
+          return (T) new AddressViewModel(singletonCImpl.provideAddressRepositoryProvider.get());
 
           case 1: // com.levelup.ui.auth.AuthViewModel 
-          return (T) new AuthViewModel(singletonCImpl.provideAuthRepositoryProvider.get(), singletonCImpl.provideSessionManagerProvider.get());
+          return (T) new AuthViewModel(singletonCImpl.provideAuthRepositoryProvider.get(), singletonCImpl.provideSessionManagerProvider.get(), singletonCImpl.provideAddressRepositoryProvider.get());
 
           case 2: // com.levelup.viewmodel.CartViewModel 
           return (T) new CartViewModel(singletonCImpl.provideCartRepositoryProvider.get());
@@ -613,6 +616,10 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     private final SingletonCImpl singletonCImpl = this;
 
+    private Provider<SessionManager> provideSessionManagerProvider;
+
+    private Provider<AuthInterceptor> provideAuthInterceptorProvider;
+
     private Provider<OkHttpClient> provideOkHttpClientProvider;
 
     private Provider<Gson> provideGsonProvider;
@@ -621,11 +628,9 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     private Provider<ApiService> provideApiServiceProvider;
 
-    private Provider<AddressRepository> addressRepositoryProvider;
+    private Provider<AddressRepository> provideAddressRepositoryProvider;
 
     private Provider<AuthRepository> provideAuthRepositoryProvider;
-
-    private Provider<SessionManager> provideSessionManagerProvider;
 
     private Provider<CartRepository> provideCartRepositoryProvider;
 
@@ -639,19 +644,20 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @SuppressWarnings("unchecked")
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
+      this.provideSessionManagerProvider = DoubleCheck.provider(new SwitchingProvider<SessionManager>(singletonCImpl, 5));
+      this.provideAuthInterceptorProvider = DoubleCheck.provider(new SwitchingProvider<AuthInterceptor>(singletonCImpl, 4));
       this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 3));
-      this.provideGsonProvider = DoubleCheck.provider(new SwitchingProvider<Gson>(singletonCImpl, 4));
+      this.provideGsonProvider = DoubleCheck.provider(new SwitchingProvider<Gson>(singletonCImpl, 6));
       this.provideRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 2));
       this.provideApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<ApiService>(singletonCImpl, 1));
-      this.addressRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AddressRepository>(singletonCImpl, 0));
-      this.provideAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AuthRepository>(singletonCImpl, 5));
-      this.provideSessionManagerProvider = DoubleCheck.provider(new SwitchingProvider<SessionManager>(singletonCImpl, 6));
-      this.provideCartRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CartRepository>(singletonCImpl, 7));
-      this.provideProductRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<ProductRepository>(singletonCImpl, 8));
+      this.provideAddressRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AddressRepository>(singletonCImpl, 0));
+      this.provideAuthRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AuthRepository>(singletonCImpl, 7));
+      this.provideCartRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<CartRepository>(singletonCImpl, 8));
+      this.provideProductRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<ProductRepository>(singletonCImpl, 9));
     }
 
     @Override
-    public void injectLevelUpApplication(LevelUpApplication arg0) {
+    public void injectLevelUpApplication(LevelUpApplication levelUpApplication) {
     }
 
     @Override
@@ -684,7 +690,7 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.levelup.data.repository.AddressRepository 
-          return (T) new AddressRepository(singletonCImpl.provideApiServiceProvider.get());
+          return (T) AppModule_ProvideAddressRepositoryFactory.provideAddressRepository(singletonCImpl.provideApiServiceProvider.get());
 
           case 1: // com.levelup.data.remote.ApiService 
           return (T) AppModule_ProvideApiServiceFactory.provideApiService(singletonCImpl.provideRetrofitProvider.get());
@@ -693,21 +699,24 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
           return (T) AppModule_ProvideRetrofitFactory.provideRetrofit(singletonCImpl.provideOkHttpClientProvider.get(), singletonCImpl.provideGsonProvider.get());
 
           case 3: // okhttp3.OkHttpClient 
-          return (T) AppModule_ProvideOkHttpClientFactory.provideOkHttpClient();
+          return (T) AppModule_ProvideOkHttpClientFactory.provideOkHttpClient(singletonCImpl.provideAuthInterceptorProvider.get());
 
-          case 4: // com.google.gson.Gson 
-          return (T) AppModule_ProvideGsonFactory.provideGson();
+          case 4: // com.levelup.data.remote.AuthInterceptor 
+          return (T) AppModule_ProvideAuthInterceptorFactory.provideAuthInterceptor(singletonCImpl.provideSessionManagerProvider.get());
 
-          case 5: // com.levelup.data.auth.AuthRepository 
-          return (T) AppModule_ProvideAuthRepositoryFactory.provideAuthRepository();
-
-          case 6: // com.levelup.data.session.SessionManager 
+          case 5: // com.levelup.data.session.SessionManager 
           return (T) AppModule_ProvideSessionManagerFactory.provideSessionManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
-          case 7: // com.levelup.data.repository.CartRepository 
+          case 6: // com.google.gson.Gson 
+          return (T) AppModule_ProvideGsonFactory.provideGson();
+
+          case 7: // com.levelup.data.auth.AuthRepository 
+          return (T) AppModule_ProvideAuthRepositoryFactory.provideAuthRepository(singletonCImpl.provideApiServiceProvider.get(), singletonCImpl.provideSessionManagerProvider.get());
+
+          case 8: // com.levelup.data.repository.CartRepository 
           return (T) AppModule_ProvideCartRepositoryFactory.provideCartRepository();
 
-          case 8: // com.levelup.data.repository.ProductRepository 
+          case 9: // com.levelup.data.repository.ProductRepository 
           return (T) AppModule_ProvideProductRepositoryFactory.provideProductRepository(singletonCImpl.provideApiServiceProvider.get());
 
           default: throw new AssertionError(id);

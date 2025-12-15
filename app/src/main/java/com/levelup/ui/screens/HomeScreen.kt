@@ -30,6 +30,7 @@ import com.levelup.ui.theme.LevelUpAccent
 import com.levelup.ui.theme.LevelUpPrimary
 import com.levelup.ui.theme.LevelUpSecondary
 import com.levelup.utils.Formatters
+import coil.compose.AsyncImage
 import com.levelup.viewmodel.ProductUiState
 import com.levelup.viewmodel.ProductViewModel
 
@@ -220,6 +221,7 @@ fun FeaturedProductsSection(products: List<Product>, navController: NavControlle
 
 @Composable
 fun ProductCard(product: Product, onClick: () -> Unit) {
+    val imageUrl = if (product.imagen.startsWith("http")) product.imagen else "http://100.26.145.96" + product.imagen
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,21 +230,14 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column {
-            // Imagen del producto (placeholder por ahora)
-            Box(
+            // Imagen del producto
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = product.nombreProducto,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .background(LevelUpPrimary.copy(alpha = 0.1f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = product.nombreProducto.take(2).uppercase(),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = LevelUpPrimary
-                )
-            }
-
+            )
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(
                     text = product.nombreProducto,
@@ -250,9 +245,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
                     fontWeight = FontWeight.Bold,
                     maxLines = 2
                 )
-                
                 Spacer(modifier = Modifier.height(4.dp))
-                
                 Text(
                     text = Formatters.formatCurrency(product.precio),
                     style = MaterialTheme.typography.titleMedium,
