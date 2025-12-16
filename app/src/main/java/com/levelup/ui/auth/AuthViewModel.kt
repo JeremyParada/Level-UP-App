@@ -153,7 +153,12 @@ constructor(
 
     // Address Management
     fun addAddress(direccion: Direccion) {
-        val user = currentUser.value ?: return
+        val user = currentUser.value
+        android.util.Log.d("AuthViewModel", "addAddress called. CurrentUser: ${user?.idUsuario}")
+        if (user == null) {
+            android.util.Log.e("AuthViewModel", "Cannot add address: User is null")
+            return
+        }
         viewModelScope.launch {
             val success =
                     addressRepository.createAddress(direccion.copy(idUsuario = user.idUsuario))

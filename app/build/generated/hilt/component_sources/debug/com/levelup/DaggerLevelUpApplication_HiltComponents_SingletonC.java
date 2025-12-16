@@ -418,21 +418,21 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_levelup_viewmodel_OrderViewModel = "com.levelup.viewmodel.OrderViewModel";
+      static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
 
-      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
+      static String com_levelup_viewmodel_OrderViewModel = "com.levelup.viewmodel.OrderViewModel";
 
       static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
 
       static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
 
-      static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
+      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
+
+      @KeepFieldType
+      AuthViewModel com_levelup_ui_auth_AuthViewModel2;
 
       @KeepFieldType
       OrderViewModel com_levelup_viewmodel_OrderViewModel2;
-
-      @KeepFieldType
-      AddressViewModel com_levelup_viewmodel_AddressViewModel2;
 
       @KeepFieldType
       ProductViewModel com_levelup_viewmodel_ProductViewModel2;
@@ -441,7 +441,7 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
       CartViewModel com_levelup_viewmodel_CartViewModel2;
 
       @KeepFieldType
-      AuthViewModel com_levelup_ui_auth_AuthViewModel2;
+      AddressViewModel com_levelup_viewmodel_AddressViewModel2;
     }
   }
 
@@ -494,21 +494,21 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
+      static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
 
-      static String com_levelup_viewmodel_OrderViewModel = "com.levelup.viewmodel.OrderViewModel";
+      static String com_levelup_viewmodel_AddressViewModel = "com.levelup.viewmodel.AddressViewModel";
 
       static String com_levelup_ui_auth_AuthViewModel = "com.levelup.ui.auth.AuthViewModel";
 
       static String com_levelup_viewmodel_CartViewModel = "com.levelup.viewmodel.CartViewModel";
 
-      static String com_levelup_viewmodel_ProductViewModel = "com.levelup.viewmodel.ProductViewModel";
+      static String com_levelup_viewmodel_OrderViewModel = "com.levelup.viewmodel.OrderViewModel";
+
+      @KeepFieldType
+      ProductViewModel com_levelup_viewmodel_ProductViewModel2;
 
       @KeepFieldType
       AddressViewModel com_levelup_viewmodel_AddressViewModel2;
-
-      @KeepFieldType
-      OrderViewModel com_levelup_viewmodel_OrderViewModel2;
 
       @KeepFieldType
       AuthViewModel com_levelup_ui_auth_AuthViewModel2;
@@ -517,7 +517,7 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
       CartViewModel com_levelup_viewmodel_CartViewModel2;
 
       @KeepFieldType
-      ProductViewModel com_levelup_viewmodel_ProductViewModel2;
+      OrderViewModel com_levelup_viewmodel_OrderViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -680,7 +680,7 @@ public final class DaggerLevelUpApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectLevelUpApplication(LevelUpApplication arg0) {
+    public void injectLevelUpApplication(LevelUpApplication levelUpApplication) {
     }
 
     @Override

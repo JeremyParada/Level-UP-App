@@ -2,16 +2,13 @@ package com.levelup.data.repository
 
 import com.levelup.data.model.Direccion
 import com.levelup.data.remote.ApiService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Singleton
-class AddressRepository @Inject constructor(
-    private val apiService: ApiService
-) {
+class AddressRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAddresses(userId: Long): List<Direccion> {
         return withContext(Dispatchers.IO) {

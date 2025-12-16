@@ -308,7 +308,7 @@ fun AddressDialog(address: Direccion?, onDismiss: () -> Unit, onSave: (Direccion
                                     Direccion(
                                             idDireccion = address?.idDireccion,
                                             idUsuario = address?.idUsuario,
-                                            tipoDireccion = address?.tipoDireccion ?: "CASA",
+                                            tipoDireccion = address?.tipoDireccion ?: "ENVIO",
                                             calle = calle,
                                             numero = numero,
                                             comuna = comuna,
